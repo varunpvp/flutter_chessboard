@@ -1,7 +1,7 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chessboard/types.dart';
-import 'package:flutter_chessboard/widgets/square.dart';
+import 'package:flutter_stateless_chessboard/types.dart';
+import 'package:flutter_stateless_chessboard/widgets/square.dart';
 
 class ChessPiece extends StatelessWidget {
   final String squareName;
