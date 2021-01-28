@@ -8,7 +8,7 @@ class ChessSquare extends StatelessWidget {
   final Color color;
   final double size;
   final Piece piece;
-  final void Function(String fromSquare, String toSquare, Piece piece) onDrop;
+  final void Function(ShortMove move) onDrop;
 
   ChessSquare({
     this.name,
@@ -26,7 +26,11 @@ class ChessSquare extends StatelessWidget {
       },
       onAccept: (data) {
         if (onDrop != null) {
-          onDrop(data.square, name, data.piece);
+          onDrop(ShortMove(
+            from: data.square,
+            to: name,
+            promotion: data.piece.type,
+          ));
         }
       },
       builder: (context, candidateData, rejectedData) {

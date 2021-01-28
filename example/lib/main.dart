@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chess App',
+      title: 'Random Chess App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -40,10 +40,10 @@ class _HomePageState extends State<HomePage> {
         child: Chessboard(
           fen: fen,
           size: size.width,
-          onMove: (from, to, piece) {
+          onMove: (move) {
             final nextFen = makeMove(fen, {
-              'from': from,
-              'to': to,
+              'from': move.from,
+              'to': move.to,
               'promotion': 'q',
             });
 

@@ -11,7 +11,7 @@ class Chessboard extends StatelessWidget {
   final String fen;
   final double size;
   final String orientation; // 'w' | 'b'
-  final void Function(String from, String to, Piece piece) onMove;
+  final void Function(ShortMove move) onMove;
   final Color lightSquareColor;
   final Color darkSquareColor;
 
@@ -46,9 +46,9 @@ class Chessboard extends StatelessWidget {
                 color: color,
                 size: squareSize,
                 piece: pieceMap[square],
-                onDrop: (from, to, piece) {
+                onDrop: (move) {
                   if (onMove != null) {
-                    onMove(from, to, piece);
+                    onMove(move);
                   }
                 },
               );

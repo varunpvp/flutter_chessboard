@@ -20,7 +20,7 @@ class Piece {
 class ShortMove {
   final String from;
   final String to;
-  final Piece promotion;
+  final String promotion;
 
   ShortMove({this.from, this.to, this.promotion});
 }
