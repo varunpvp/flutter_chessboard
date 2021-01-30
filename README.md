@@ -1,14 +1,66 @@
-# flutter_chessboard
+# flutter_stateless_chessboard
 
-A Stateless Chessboard Widget for Flutter. This package provides a just the chessboard. The game logic can be implemented using chess library.
+A Stateless Chessboard Widget for Flutter. This package provides just the chessboard. The game logic can be implemented using [chess](https://pub.dev/packages/chess) library. Check example/main.dart file, for implementing game logic.
 
-## Getting Started
+![alt text](https://github.com/varunpvp/flutter_stateless_chessboard/blob/master/preview.gif)
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+### Using the Chessboard
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+To use Chessboard widget, [add flutter_stateless_chessboard as a dependency](https://pub.dev/packages/flutter_stateless_chessboard/install) in your pubspec.yaml
+
+### Example
+
+```
+import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
+
+void main() {
+  runApp(
+    new MaterialApp(
+      home: new Scaffold(
+        body: new Center(
+          child: Chessboard(
+            size: 300,
+            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            onMove: (move) {  // optional
+              // TODO: process the move
+              print("move from ${move.from} to ${move.to}");
+            },
+            orientation: "b",  // optional
+            lightSquareColor: Color.fromRGBO(240, 217, 181, 1), // optional
+            darkSquareColor: Color.fromRGBO(181, 136, 99, 1), // optional
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+```
+
+## Parameters
+
+### fen:
+
+fen that should be show on the board (example `rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1`)
+
+### size:
+
+Size of the chessboard widget
+
+### onMove (optional):
+
+Called when a move is made on the board. Passing a ShortMove(from, to).
+
+### orientation (optional):
+
+Specify orientation of the chessboard. `w` for white side. `b` for black side.
+
+### lightSquareColor (optional):
+
+color of light square on chessboard.
+
+### darkSquareColor (optional):
+
+color of dart square on chessboard.
+
