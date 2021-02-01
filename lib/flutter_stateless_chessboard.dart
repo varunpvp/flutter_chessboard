@@ -7,7 +7,7 @@ import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
 
 final zeroToSeven = List.generate(8, (index) => index);
 
-class Chessboard extends StatelessWidget {
+class Chessboard extends StatefulWidget {
   final String fen;
   final double size;
   final String orientation; // 'w' | 'b'
@@ -25,30 +25,54 @@ class Chessboard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final squareSize = size / 8;
+  State<StatefulWidget> createState() {
+    return _ChessboardState();
+  }
+}
 
-    final pieceMap = getPieceMap(fen);
+class _ChessboardState extends State<Chessboard> {
+  HalfMove _clickMove;
+
+  @override
+  Widget build(BuildContext context) {
+    final squareSize = widget.size / 8;
+    final pieceMap = getPieceMap(widget.fen);
 
     return Container(
-      width: size,
-      height: size,
+      width: widget.size,
+      height: widget.size,
       child: Row(
         children: zeroToSeven.map((fileIndex) {
           return Column(
             children: zeroToSeven.map((rankIndex) {
-              final square = getSquare(rankIndex, fileIndex, orientation);
+              final square =
+                  getSquare(rankIndex, fileIndex, widget.orientation);
               final color = (rankIndex + fileIndex) % 2 == 0
-                  ? lightSquareColor
-                  : darkSquareColor;
+                  ? widget.lightSquareColor
+                  : widget.darkSquareColor;
               return ChessSquare(
                 name: square,
                 color: color,
                 size: squareSize,
                 piece: pieceMap[square],
                 onDrop: (move) {
-                  if (onMove != null) {
-                    onMove(move);
+                  if (widget.onMove != null) {
+                    widget.onMove(move);
+                  }
+                },
+                onPieceClick: (halfMove) {
+                  if (_clickMove == null) {
+                    setClickMove(halfMove);
+                  } else if (_clickMove.square == halfMove.square) {
+                    setClickMove(null);
+                  } else if (_clickMove.piece.color == halfMove.piece.color) {
+                    setClickMove(halfMove);
+                  } else {
+                    widget.onMove(ShortMove(
+                      from: _clickMove.square,
+                      to: halfMove.square,
+                      promotion: 'q',
+                    ));
                   }
                 },
               );
@@ -57,5 +81,11 @@ class Chessboard extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  void setClickMove(HalfMove move) {
+    setState(() {
+      _clickMove = move;
+    });
   }
 }

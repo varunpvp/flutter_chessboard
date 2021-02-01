@@ -9,6 +9,7 @@ class ChessSquare extends StatelessWidget {
   final double size;
   final Piece piece;
   final void Function(ShortMove move) onDrop;
+  final void Function(HalfMove move) onPieceClick;
 
   ChessSquare({
     this.name,
@@ -16,6 +17,7 @@ class ChessSquare extends StatelessWidget {
     @required this.size,
     this.piece,
     this.onDrop,
+    this.onPieceClick,
   });
 
   @override
@@ -29,7 +31,7 @@ class ChessSquare extends StatelessWidget {
           onDrop(ShortMove(
             from: data.square,
             to: name,
-            promotion: data.piece.type,
+            promotion: 'q',
           ));
         }
       },
@@ -43,6 +45,7 @@ class ChessSquare extends StatelessWidget {
                   squareColor: color,
                   piece: piece,
                   size: size,
+                  onClick: () => onPieceClick(HalfMove(name, piece)),
                 )
               : null,
         );
