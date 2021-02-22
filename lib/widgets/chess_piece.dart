@@ -8,14 +8,12 @@ class ChessPiece extends StatelessWidget {
   final Color squareColor;
   final Piece piece;
   final double size;
-  final Function() onClick;
 
   ChessPiece({
     @required this.squareName,
     @required this.squareColor,
     @required this.piece,
     @required this.size,
-    @required this.onClick,
   });
 
   @override
@@ -24,10 +22,7 @@ class ChessPiece extends StatelessWidget {
 
     return Draggable<HalfMove>(
       data: HalfMove(squareName, piece),
-      child: InkWell(
-        onTap: onClick,
-        child: pieceWidget,
-      ),
+      child: pieceWidget,
       feedback: pieceWidget,
       childWhenDragging: Square(
         color: squareColor,

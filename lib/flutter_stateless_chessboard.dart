@@ -54,25 +54,30 @@ class _ChessboardState extends State<Chessboard> {
                 name: square,
                 color: color,
                 size: squareSize,
+                highlight: _clickMove?.square == square,
                 piece: pieceMap[square],
                 onDrop: (move) {
                   if (widget.onMove != null) {
                     widget.onMove(move);
+                    setClickMove(null);
                   }
                 },
-                onPieceClick: (halfMove) {
-                  if (_clickMove == null) {
-                    setClickMove(halfMove);
-                  } else if (_clickMove.square == halfMove.square) {
+                onClick: (halfMove) {
+                  if (_clickMove != null) {
+                    if (_clickMove.square == halfMove.square) {
+                      setClickMove(null);
+                    } else if (_clickMove.piece.color == halfMove.piece?.color) {
+                      setClickMove(halfMove);
+                    } else {
+                      widget.onMove(ShortMove(
+                        from: _clickMove.square,
+                        to: halfMove.square,
+                        promotion: 'q',
+                      ));
+                    }
                     setClickMove(null);
-                  } else if (_clickMove.piece.color == halfMove.piece.color) {
+                  } else if (halfMove.piece != null) {
                     setClickMove(halfMove);
-                  } else {
-                    widget.onMove(ShortMove(
-                      from: _clickMove.square,
-                      to: halfMove.square,
-                      promotion: 'q',
-                    ));
                   }
                 },
               );
