@@ -21,16 +21,14 @@ class Square extends StatelessWidget {
           color: color,
           height: size,
           width: size,
-          child: child,
         ),
         if (highlight == true)
-          IgnorePointer(
-            child: Container(
-              color: Color.fromRGBO(128, 128, 128, .3),
-              height: size,
-              width: size,
-            ),
+          Container(
+            color: Color.fromRGBO(128, 128, 128, .3),
+            height: size,
+            width: size,
           ),
+        if (child != null) child,
       ],
     );
   }

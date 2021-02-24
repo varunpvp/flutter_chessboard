@@ -1,6 +1,7 @@
 class Piece {
   final String type;
   final String color;
+
   Piece(this.type, this.color);
 
   @override
@@ -28,5 +29,6 @@ class ShortMove {
 class HalfMove {
   final String square;
   final Piece piece;
+
   HalfMove(this.square, this.piece);
 }

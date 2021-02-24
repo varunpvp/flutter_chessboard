@@ -66,7 +66,8 @@ class _ChessboardState extends State<Chessboard> {
                   if (_clickMove != null) {
                     if (_clickMove.square == halfMove.square) {
                       setClickMove(null);
-                    } else if (_clickMove.piece.color == halfMove.piece?.color) {
+                    } else if (_clickMove.piece.color ==
+                        halfMove.piece?.color) {
                       setClickMove(halfMove);
                     } else {
                       widget.onMove(ShortMove(
