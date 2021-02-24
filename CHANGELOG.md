@@ -10,3 +10,7 @@
 ## [0.0.3] - Feb 22, 2021.
 
 * Add support for touch move
+
+## [0.0.4] - Feb 22, 2021.
+
+* Minor change in square highlight and run dartfmt
