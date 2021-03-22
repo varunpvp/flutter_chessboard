@@ -35,7 +35,7 @@ packages:
       name: chess
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.5"
+    version: "0.6.6"
   chess_vectors_flutter:
     dependency: "direct main"
     description:
