@@ -1,24 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart' as cb;
 
 import 'utils.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Random Chess App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,22 +11,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  String _fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final viewport = MediaQuery.of(context).size;
+    final size = min(viewport.height, viewport.width);
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Random Chess"),
       ),
       body: Center(
-        child: Chessboard(
-          fen: fen,
-          size: size.width,
+        child: cb.Chessboard(
+          fen: _fen,
+          size: size,
+          orientation: cb.Color.WHITE,
           onMove: (move) {
-            final nextFen = makeMove(fen, {
+            final nextFen = makeMove(_fen, {
               'from': move.from,
               'to': move.to,
               'promotion': 'q',
@@ -49,18 +36,18 @@ class _HomePageState extends State<HomePage> {
 
             if (nextFen != null) {
               setState(() {
-                fen = nextFen;
+                _fen = nextFen;
               });
 
-              final nextMove = getRandomMove(fen);
+              Future.delayed(Duration(milliseconds: 300)).then((_) {
+                final nextMove = getRandomMove(_fen);
 
-              if (nextMove != null) {
-                Future.delayed(Duration(milliseconds: 300)).then((value) {
+                if (nextMove != null) {
                   setState(() {
-                    fen = makeMove(fen, nextMove);
+                    _fen = makeMove(_fen, nextMove);
                   });
-                });
-              }
+                }
+              });
             }
           },
         ),
