@@ -19,3 +19,7 @@
 
 * Add proper typing
 * Fix known issues
+
+## [0.0.6] - Mar 22, 2021.
+
+* Update example
