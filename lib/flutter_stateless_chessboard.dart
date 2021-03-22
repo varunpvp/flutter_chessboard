@@ -5,6 +5,8 @@ import 'package:flutter_stateless_chessboard/types.dart' as types;
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
 
+export 'package:flutter_stateless_chessboard/types.dart';
+
 final zeroToSeven = List.generate(8, (index) => index);
 
 class Chessboard extends StatefulWidget {
