@@ -14,3 +14,8 @@
 ## [0.0.4] - Feb 24, 2021.
 
 * Minor change in square highlight and run dartfmt
+
+## [0.0.5] - Mar 22, 2021.
+
+* Add proper typing
+* Fix known issues
