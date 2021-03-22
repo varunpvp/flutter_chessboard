@@ -12,21 +12,21 @@ To use Chessboard widget, [add flutter_stateless_chessboard as a dependency](htt
 
 ```
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart' as cb;
 
 void main() {
   runApp(
     new MaterialApp(
       home: new Scaffold(
         body: new Center(
-          child: Chessboard(
+          child: cb.Chessboard(
             size: 300,
             fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
             onMove: (move) {  // optional
               // TODO: process the move
               print("move from ${move.from} to ${move.to}");
             },
-            orientation: "b",  // optional
+            orientation: cb.Color.BLACK,  // optional
             lightSquareColor: Color.fromRGBO(240, 217, 181, 1), // optional
             darkSquareColor: Color.fromRGBO(181, 136, 99, 1), // optional
           ),
@@ -50,11 +50,11 @@ Size of the chessboard widget
 
 ### onMove (optional):
 
-Called when a move is made on the board. Passing a ShortMove(from, to).
+Called when a move is made on the board. Passing a ShortMove(from, to, promotion).
 
 ### orientation (optional):
 
-Specify orientation of the chessboard. `w` for white side. `b` for black side.
+Specify orientation of the chessboard.
 
 ### lightSquareColor (optional):
 
