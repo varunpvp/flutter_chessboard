@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_piece.dart';
@@ -9,7 +10,7 @@ class ChessSquare extends StatelessWidget {
   final double size;
   final Piece? piece;
   final void Function(ShortMove move)? onDrop;
-  final void Function(HalfMove move)? onClick;
+  final void Function(HalfMove move) onClick;
   final bool highlight;
 
   ChessSquare({
@@ -19,7 +20,7 @@ class ChessSquare extends StatelessWidget {
     this.highlight = false,
     this.piece,
     this.onDrop,
-    this.onClick,
+    required this.onClick,
   });
 
   @override
@@ -39,11 +40,8 @@ class ChessSquare extends StatelessWidget {
       },
       builder: (context, candidateData, rejectedData) {
         return InkWell(
-          onTap: () {
-            if (onClick != null) {
-              onClick!(HalfMove(name, piece!));
-            }
-          },
+          onTap: () =>
+              onClick(HalfMove(name, piece != null ? Some(piece!) : None())),
           child: Square(
             size: size,
             color: color,

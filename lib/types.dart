@@ -1,4 +1,5 @@
 import 'package:chess/chess.dart';
+import 'package:dartz/dartz.dart';
 
 class Piece {
   final String type;
@@ -36,7 +37,9 @@ class ShortMove {
 
 class HalfMove {
   final String square;
-  final Piece piece;
+  final Option<Piece> piece;
 
   HalfMove(this.square, this.piece);
+
+  toString() => 'Square: $square \n $piece';
 }

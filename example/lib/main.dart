@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Chessboard(
           fen: fen,
-          size: size.width,
+          boardSize: size.width,
           onMove: (move) {
             final nextFen = makeMove(fen, {
               'from': move.from,

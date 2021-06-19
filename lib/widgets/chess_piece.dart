@@ -1,4 +1,5 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/widgets/square.dart';
@@ -21,7 +22,7 @@ class ChessPiece extends StatelessWidget {
     final pieceWidget = _buildPiece();
 
     return Draggable<HalfMove>(
-      data: HalfMove(squareName, piece),
+      data: HalfMove(squareName, Some(piece)),
       child: pieceWidget,
       feedback: pieceWidget,
       childWhenDragging: Square(

@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   chess_vectors_flutter: ^1.0.16
   chess: ^0.7.0
+  dartz: ^0.10.0-nullsafety.2
 
 dev_dependencies:
   flutter_test:

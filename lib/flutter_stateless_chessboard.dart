@@ -1,5 +1,9 @@
 library flutter_chessboard;
 
+import 'dart:ui';
+
+import 'package:dartz/dartz.dart' hide State;
+import 'package:dartz/dartz_streaming.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
@@ -7,11 +11,14 @@ import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
 
 final zeroToSeven = List.generate(8, (index) => index);
 
+typedef Callback = void Function(ShortMove move);
+final uselessFunction = (x) => {};
+
 class Chessboard extends StatefulWidget {
   final String fen;
   final double boardSize;
   final String orientation; // 'w' | 'b'
-  final void Function(ShortMove move)? onMove;
+  final Callback onMove;
   final Color lightSquareColor;
   final Color darkSquareColor;
 
@@ -19,21 +26,19 @@ class Chessboard extends StatefulWidget {
     required this.fen,
     required this.boardSize,
     this.orientation = 'w',
-    this.onMove,
+    Callback? onMove,
     this.lightSquareColor = const Color.fromRGBO(240, 217, 181, 1),
     this.darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
-  });
+  }) : onMove = onMove ?? uselessFunction;
 
   double get squareSize => this.boardSize / 8;
 
   @override
-  State<StatefulWidget> createState() {
-    return _ChessboardState();
-  }
+  State<StatefulWidget> createState() => _ChessboardState();
 }
 
 class _ChessboardState extends State<Chessboard> {
-  HalfMove? _clickMove;
+  Option<HalfMove> _previousClickMove = None();
 
   _pickColor(int rankIndex, int fileIndex) => (rankIndex + fileIndex) % 2 == 0
       ? widget.lightSquareColor
@@ -64,37 +69,33 @@ class _ChessboardState extends State<Chessboard> {
         highlight: isHighlighted(rankIndex, fileIndex),
         piece: getPieceMap(widget.fen)[getSquareName(rankIndex, fileIndex)],
         onDrop: (move) {
-          if (widget.onMove != null) {
-            widget.onMove!(move);
-            setClickMove(null);
-          }
+          widget.onMove(move);
+          setClickMove(null);
         },
-        onClick: (halfMove) {
-          if (_clickMove != null) {
-            if (_clickMove!.square == halfMove.square) {
+        onClick: (HalfMove currentClickMove) {
+          _previousClickMove.fold(() => setClickMove(currentClickMove),
+              (previousClickMove) {
+            if (previousClickMove.square == currentClickMove.square) {
               setClickMove(null);
-            } else if (_clickMove!.piece.color == halfMove.piece.color) {
-              setClickMove(halfMove);
             } else {
-              widget.onMove!(ShortMove(
-                from: _clickMove!.square,
-                to: halfMove.square,
+              widget.onMove(ShortMove(
+                from: previousClickMove.square,
+                to: currentClickMove.square,
                 promotion: 'q',
               ));
+              setClickMove(null);
             }
-            setClickMove(null);
-          } else {
-            setClickMove(halfMove);
-          }
+          });
         },
       );
 
-  bool isHighlighted(int rankIndex, int fileIndex) =>
-      _clickMove?.square == getSquareName(rankIndex, fileIndex);
+  bool isHighlighted(int rankIndex, int fileIndex) => _previousClickMove.fold(
+      () => false,
+      (clicked) => clicked.square == getSquareName(rankIndex, fileIndex));
 
   void setClickMove(HalfMove? move) {
     setState(() {
-      _clickMove = move;
+      _previousClickMove = move == null ? None() : Some(move);
     });
   }
 
