@@ -38,7 +38,6 @@ class ChessSquare extends StatelessWidget {
         }
       },
       builder: (context, candidateData, rejectedData) {
-        if (piece != null) print(piece);
         return InkWell(
           onTap: () {
             if (onClick != null) {
