@@ -11,13 +11,13 @@ class Chessboard extends StatefulWidget {
   final String fen;
   final double size;
   final String orientation; // 'w' | 'b'
-  final void Function(ShortMove move) onMove;
+  final void Function(ShortMove move)? onMove;
   final Color lightSquareColor;
   final Color darkSquareColor;
 
   Chessboard({
-    @required this.fen,
-    @required this.size,
+    required this.fen,
+    required this.size,
     this.orientation = 'w',
     this.onMove,
     this.lightSquareColor = const Color.fromRGBO(240, 217, 181, 1),
@@ -31,7 +31,11 @@ class Chessboard extends StatefulWidget {
 }
 
 class _ChessboardState extends State<Chessboard> {
-  HalfMove _clickMove;
+  HalfMove? _clickMove;
+
+  _pickColor(int rankIndex, int fileIndex, Color lightSquareColor,
+          Color darkSquareColor) =>
+      (rankIndex + fileIndex) % 2 == 0 ? lightSquareColor : darkSquareColor;
 
   @override
   Widget build(BuildContext context) {
@@ -47,31 +51,29 @@ class _ChessboardState extends State<Chessboard> {
             children: zeroToSeven.map((rankIndex) {
               final square =
                   getSquare(rankIndex, fileIndex, widget.orientation);
-              final color = (rankIndex + fileIndex) % 2 == 0
-                  ? widget.lightSquareColor
-                  : widget.darkSquareColor;
               return ChessSquare(
                 name: square,
-                color: color,
+                color: _pickColor(rankIndex, fileIndex, widget.lightSquareColor,
+                    widget.darkSquareColor),
                 size: squareSize,
                 highlight: _clickMove?.square == square,
                 piece: pieceMap[square],
                 onDrop: (move) {
                   if (widget.onMove != null) {
-                    widget.onMove(move);
+                    widget.onMove!(move);
                     setClickMove(null);
                   }
                 },
                 onClick: (halfMove) {
                   if (_clickMove != null) {
-                    if (_clickMove.square == halfMove.square) {
+                    if (_clickMove!.square == halfMove.square) {
                       setClickMove(null);
-                    } else if (_clickMove.piece.color ==
-                        halfMove.piece?.color) {
+                    } else if (_clickMove!.piece.color ==
+                        halfMove.piece.color) {
                       setClickMove(halfMove);
                     } else {
-                      widget.onMove(ShortMove(
-                        from: _clickMove.square,
+                      widget.onMove!(ShortMove(
+                        from: _clickMove!.square,
                         to: halfMove.square,
                         promotion: 'q',
                       ));
@@ -89,7 +91,7 @@ class _ChessboardState extends State<Chessboard> {
     );
   }
 
-  void setClickMove(HalfMove move) {
+  void setClickMove(HalfMove? move) {
     setState(() {
       _clickMove = move;
     });

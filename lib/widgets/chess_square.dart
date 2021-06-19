@@ -7,15 +7,15 @@ class ChessSquare extends StatelessWidget {
   final String name;
   final Color color;
   final double size;
-  final Piece piece;
-  final void Function(ShortMove move) onDrop;
-  final void Function(HalfMove move) onClick;
+  final Piece? piece;
+  final void Function(ShortMove move)? onDrop;
+  final void Function(HalfMove move)? onClick;
   final bool highlight;
 
   ChessSquare({
-    this.name,
-    @required this.color,
-    @required this.size,
+    required this.name,
+    required this.color,
+    required this.size,
     this.highlight = false,
     this.piece,
     this.onDrop,
@@ -26,11 +26,11 @@ class ChessSquare extends StatelessWidget {
   Widget build(BuildContext context) {
     return DragTarget<HalfMove>(
       onWillAccept: (data) {
-        return data.square != name;
+        return data?.square != name;
       },
       onAccept: (data) {
         if (onDrop != null) {
-          onDrop(ShortMove(
+          onDrop!(ShortMove(
             from: data.square,
             to: name,
             promotion: 'q',
@@ -38,10 +38,11 @@ class ChessSquare extends StatelessWidget {
         }
       },
       builder: (context, candidateData, rejectedData) {
+        if (piece != null) print(piece);
         return InkWell(
           onTap: () {
             if (onClick != null) {
-              onClick(HalfMove(name, piece));
+              onClick!(HalfMove(name, piece!));
             }
           },
           child: Square(
@@ -52,7 +53,7 @@ class ChessSquare extends StatelessWidget {
                 ? ChessPiece(
                     squareName: name,
                     squareColor: color,
-                    piece: piece,
+                    piece: piece!,
                     size: size,
                   )
                 : null,

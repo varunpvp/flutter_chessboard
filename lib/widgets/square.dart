@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class Square extends StatelessWidget {
   final Color color;
   final double size;
-  final Widget child;
+  final Widget? child;
   final bool highlight;
 
   Square({
-    @required this.color,
-    @required this.size,
+    required this.color,
+    required this.size,
     this.child,
     this.highlight = false,
   });
@@ -28,7 +28,7 @@ class Square extends StatelessWidget {
             height: size,
             width: size,
           ),
-        if (child != null) child,
+        if (child != null) child!,
       ],
     );
   }

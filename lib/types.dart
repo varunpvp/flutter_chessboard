@@ -23,7 +23,11 @@ class ShortMove {
   final String to;
   final String promotion;
 
-  ShortMove({this.from, this.to, this.promotion});
+  ShortMove({
+    required this.from,
+    required this.to,
+    required this.promotion,
+  });
 }
 
 class HalfMove {
