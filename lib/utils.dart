@@ -14,7 +14,7 @@ Map<String, Piece> getPieceMap(String fen) {
   squares.forEach((square) {
     final piece = chess.get(square);
     if (piece != null) {
-      map[square] = Piece(piece.type.toString(), piece.color.toString());
+      map[square] = Piece(piece.type.toString(), piece.color);
     }
   });
   return map;

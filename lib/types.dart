@@ -1,12 +1,16 @@
+import 'package:chess/chess.dart';
+
 class Piece {
   final String type;
-  final String color;
+  final Color color;
 
   Piece(this.type, this.color);
 
   @override
   String toString() {
-    return "$color$type";
+    final colorLetter =
+        this.color.toString().split('.')[1].substring(0, 1).toLowerCase();
+    return "$colorLetter$type";
   }
 
   @override
