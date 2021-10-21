@@ -4,14 +4,14 @@ version: 0.0.6
 homepage: https://github.com/varunpvp/flutter_chessboard
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  chess_vectors_flutter: ^1.0.12
-  chess: ^0.6.6
+  chess_vectors_flutter: ^1.0.16
+  chess: ^0.7.0
 
 dev_dependencies:
   flutter_test:

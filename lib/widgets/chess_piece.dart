@@ -10,10 +10,10 @@ class ChessPiece extends StatelessWidget {
   final double size;
 
   ChessPiece({
-    @required this.squareName,
-    @required this.squareColor,
-    @required this.piece,
-    @required this.size,
+    required this.squareName,
+    required this.squareColor,
+    required this.piece,
+    required this.size,
   });
 
   @override
@@ -58,7 +58,7 @@ class ChessPiece extends StatelessWidget {
       case 'bp':
         return BlackPawn(size: size);
       default:
-        return null;
+        return SizedBox();
     }
   }
 }
