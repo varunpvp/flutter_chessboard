@@ -40,18 +40,19 @@ class _ChessboardState extends State<Chessboard> {
     return Container(
       width: widget.size,
       height: widget.size,
-      child: Row(
-        children: _buildFiles(),
-      ),
+      child: _buildFiles(),
     );
   }
 
-  List<Widget> _buildFiles() {
+  Widget _buildFiles() {
     final squareSize = widget.size / 8;
     final pieceMap = getPieceMap(widget.fen);
-    return zeroToSeven.map((fileIndex) {
-      return _buildRank(fileIndex, squareSize, pieceMap);
-    }).toList();
+
+    return Row(
+      children: zeroToSeven.map((fileIndex) {
+        return _buildRank(fileIndex, squareSize, pieceMap);
+      }).toList(),
+    );
   }
 
   Column _buildRank(
@@ -75,7 +76,7 @@ class _ChessboardState extends State<Chessboard> {
     );
   }
 
-  ChessSquare _buildChessSquare(
+  Widget _buildChessSquare(
     String square,
     Color color,
     double squareSize,
