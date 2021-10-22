@@ -1,11 +1,15 @@
 class Piece {
-  PieceType type;
+  final PieceType type;
   final Color color;
 
-  Piece(this.type, this.color);
+  const Piece(this.type, this.color);
 
   @override
   String toString() => '$color$type';
+}
+
+class NoPiece extends Piece {
+  const NoPiece() : super(PieceType.NONE, Color.WHITE);
 }
 
 class Color {
@@ -37,6 +41,7 @@ class PieceType {
   static const PieceType ROOK = const PieceType._value('r');
   static const PieceType QUEEN = const PieceType._value('q');
   static const PieceType KING = const PieceType._value('k');
+  static const PieceType NONE = const PieceType._value('');
 
   factory PieceType.fromString(String value) {
     switch (value.toLowerCase()) {
@@ -52,6 +57,8 @@ class PieceType {
         return PieceType.QUEEN;
       case 'k':
         return PieceType.KING;
+      case '':
+        return PieceType.NONE;
       default:
         throw "Unknown piece type";
     }
@@ -76,7 +83,11 @@ class ShortMove {
   final String to;
   final PieceType promotion;
 
-  ShortMove({this.from, this.to, this.promotion});
+  ShortMove({
+    required this.from,
+    required this.to,
+    required this.promotion,
+  });
 }
 
 class HalfMove {

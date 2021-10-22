@@ -1,9 +1,27 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart' as cb;
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart'
+    as cb;
 
 import 'utils.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Random Chess App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomePage(),
+    );
+  }
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -44,7 +62,7 @@ class _HomePageState extends State<HomePage> {
 
                 if (nextMove != null) {
                   setState(() {
-                    _fen = makeMove(_fen, nextMove);
+                    _fen = makeMove(_fen, nextMove) ?? _fen;
                   });
                 }
               });

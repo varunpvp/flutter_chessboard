@@ -23,3 +23,5 @@ Map<String, Piece> getPieceMap(String fen) {
   });
   return map;
 }
+
+noop1(arg1) {}

@@ -23,3 +23,7 @@
 ## [0.0.6] - Mar 22, 2021.
 
 * Update example
+
+## [0.0.7] - Oct 21, 2021.
+
+* Add null safety
