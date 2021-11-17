@@ -107,7 +107,6 @@ class _ChessboardState extends State<Chessboard> {
         final sameColorPiece = t.piece
             .map2<types.Piece, bool>(
                 halfMove.piece, (t, r) => t.color == r.color)
-            .map((t) => t)
             .getOrElse(() => false);
 
         if (sameSquare) {
