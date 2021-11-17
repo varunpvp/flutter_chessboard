@@ -78,12 +78,12 @@ class PieceType {
 class ShortMove {
   final String from;
   final String to;
-  final PieceType promotion;
+  final Option<PieceType> promotion;
 
   ShortMove({
     required this.from,
     required this.to,
-    required this.promotion,
+    this.promotion = const None(),
   });
 }
 

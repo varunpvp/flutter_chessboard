@@ -117,7 +117,6 @@ class _ChessboardState extends State<Chessboard> {
           widget.onMove(types.ShortMove(
             from: t.square,
             to: halfMove.square,
-            promotion: types.PieceType.QUEEN,
           ));
         }
         clearLastClickMove();

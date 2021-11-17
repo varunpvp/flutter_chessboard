@@ -34,7 +34,6 @@ class ChessSquare extends StatelessWidget {
         onDrop(types.ShortMove(
           from: data.square,
           to: name,
-          promotion: types.PieceType.QUEEN,
         ));
       },
       builder: (context, candidateData, rejectedData) {

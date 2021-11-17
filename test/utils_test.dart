@@ -8,18 +8,14 @@ void main() {
 
     test("isPromoting returns true if promoting", () {
       expect(
-        isPromoting(
-          fen,
-          ShortMove(from: "b7", to: "a8", promotion: PieceType.QUEEN),
-        ),
+        isPromoting(fen, ShortMove(from: "b7", to: "a8")),
         isTrue,
       );
     });
 
     test("isPromoting returns false not if promoting", () {
       expect(
-        isPromoting(
-            fen, ShortMove(from: "a2", to: "a3", promotion: PieceType.QUEEN)),
+        isPromoting(fen, ShortMove(from: "a2", to: "a3")),
         isFalse,
       );
     });
