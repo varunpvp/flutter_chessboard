@@ -3,12 +3,13 @@ import 'package:flutter_stateless_chessboard/types.dart' as types;
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/square.dart';
+import 'package:fpdart/fpdart.dart';
 
 class ChessSquare extends StatelessWidget {
   final String name;
   final Color color;
   final double size;
-  final types.Piece piece;
+  final Option<types.Piece> piece;
   final void Function(types.ShortMove move) onDrop;
   final void Function(types.HalfMove move) onClick;
   final bool highlight;
@@ -17,7 +18,7 @@ class ChessSquare extends StatelessWidget {
     required this.name,
     required this.color,
     required this.size,
-    this.piece = const types.NoPiece(),
+    this.piece = const None(),
     this.highlight = false,
     this.onDrop = noop1,
     this.onClick = noop1,
@@ -43,14 +44,14 @@ class ChessSquare extends StatelessWidget {
             size: size,
             color: color,
             highlight: highlight,
-            child: piece is types.NoPiece
-                ? null
-                : ChessPiece(
-                    squareName: name,
-                    squareColor: color,
-                    piece: piece,
-                    size: size,
-                  ),
+            child: piece.match(
+                (t) => ChessPiece(
+                      squareName: name,
+                      squareColor: color,
+                      piece: t,
+                      size: size,
+                    ),
+                () => null),
           ),
         );
       },

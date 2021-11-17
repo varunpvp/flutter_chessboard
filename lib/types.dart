@@ -1,15 +1,15 @@
-class Piece {
-  final PieceType type;
-  final Color color;
+import 'package:fpdart/fpdart.dart';
 
-  const Piece(this.type, this.color);
+typedef PieceMap = Map<String, Option<Piece>>;
+
+class Piece {
+  final Color color;
+  final PieceType type;
+
+  const Piece(this.color, this.type);
 
   @override
   String toString() => '$color$type';
-}
-
-class NoPiece extends Piece {
-  const NoPiece() : super(PieceType.NONE, Color.WHITE);
 }
 
 class Color {
@@ -41,7 +41,6 @@ class PieceType {
   static const PieceType ROOK = const PieceType._value('r');
   static const PieceType QUEEN = const PieceType._value('q');
   static const PieceType KING = const PieceType._value('k');
-  static const PieceType NONE = const PieceType._value('');
 
   factory PieceType.fromString(String value) {
     switch (value.toLowerCase()) {
@@ -57,8 +56,6 @@ class PieceType {
         return PieceType.QUEEN;
       case 'k':
         return PieceType.KING;
-      case '':
-        return PieceType.NONE;
       default:
         throw "Unknown piece type";
     }
@@ -92,7 +89,11 @@ class ShortMove {
 
 class HalfMove {
   final String square;
-  final Piece piece;
+  final Option<Piece> piece;
 
   HalfMove(this.square, this.piece);
+
+  String toString() {
+    return "$square::$piece";
+  }
 }

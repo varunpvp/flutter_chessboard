@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/types.dart' as types;
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
-import 'package:optional/optional.dart';
-
+import 'package:fpdart/fpdart.dart' show Option;
 export 'package:flutter_stateless_chessboard/types.dart';
 
 final zeroToSeven = List.generate(8, (index) => index);
@@ -34,7 +33,7 @@ class Chessboard extends StatefulWidget {
 }
 
 class _ChessboardState extends State<Chessboard> {
-  Optional<types.HalfMove> _lastClickMove = Optional.empty();
+  Option<types.HalfMove> _lastClickMove = Option.none();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +58,7 @@ class _ChessboardState extends State<Chessboard> {
   Column _buildRank(
     int fileIndex,
     double squareSize,
-    Map<String, types.Piece> pieceMap,
+    types.PieceMap pieceMap,
   ) {
     return Column(
       children: zeroToSeven.map((rankIndex) {
@@ -81,14 +80,16 @@ class _ChessboardState extends State<Chessboard> {
     String square,
     Color color,
     double squareSize,
-    Map<String, types.Piece> pieceMap,
+    types.PieceMap pieceMap,
   ) {
+    final highlight =
+        _lastClickMove.map((t) => t.square == square).getOrElse(() => false);
     return ChessSquare(
       name: square,
       color: color,
       size: squareSize,
-      highlight: _lastClickMove.map((_) => true).orElse(false),
-      piece: pieceMap[square] ?? types.NoPiece(),
+      highlight: highlight,
+      piece: Option.fromNullable(pieceMap[square]).flatMap((t) => t),
       onDrop: handleOnDrop,
       onClick: handleOnClick,
     );
@@ -100,11 +101,18 @@ class _ChessboardState extends State<Chessboard> {
   }
 
   void handleOnClick(types.HalfMove halfMove) {
-    _lastClickMove.ifPresent(
+    _lastClickMove.match(
       (t) {
-        if (t.square == halfMove.square) {
+        final sameSquare = t.square == halfMove.square;
+        final sameColorPiece = t.piece
+            .map2<types.Piece, bool>(
+                halfMove.piece, (t, r) => t.color == r.color)
+            .map((t) => t)
+            .getOrElse(() => false);
+
+        if (sameSquare) {
           clearLastClickMove();
-        } else if (t.piece.color == halfMove.piece.color) {
+        } else if (sameColorPiece) {
           setLastClickMove(halfMove);
         } else {
           widget.onMove(types.ShortMove(
@@ -115,7 +123,7 @@ class _ChessboardState extends State<Chessboard> {
         }
         clearLastClickMove();
       },
-      orElse: () {
+      () {
         setLastClickMove(halfMove);
       },
     );
@@ -123,13 +131,13 @@ class _ChessboardState extends State<Chessboard> {
 
   void clearLastClickMove() {
     setState(() {
-      _lastClickMove = Optional.empty();
+      _lastClickMove = Option.none();
     });
   }
 
   void setLastClickMove(types.HalfMove move) {
     setState(() {
-      _lastClickMove = Optional.of(move);
+      _lastClickMove = Option.of(move);
     });
   }
 }
