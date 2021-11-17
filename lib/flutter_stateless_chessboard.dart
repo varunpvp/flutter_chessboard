@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/types.dart' as types;
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
+import 'package:optional/optional.dart';
 
 export 'package:flutter_stateless_chessboard/types.dart';
 
@@ -33,7 +34,7 @@ class Chessboard extends StatefulWidget {
 }
 
 class _ChessboardState extends State<Chessboard> {
-  types.HalfMove? _lastClickMove;
+  Optional<types.HalfMove> _lastClickMove = Optional.empty();
 
   @override
   Widget build(BuildContext context) {
@@ -86,36 +87,49 @@ class _ChessboardState extends State<Chessboard> {
       name: square,
       color: color,
       size: squareSize,
-      highlight: _lastClickMove?.square == square,
+      highlight: _lastClickMove.map((_) => true).orElse(false),
       piece: pieceMap[square] ?? types.NoPiece(),
-      onDrop: (move) {
-        widget.onMove(move);
-        setLastClickMove(null);
-      },
-      onClick: (halfMove) {
-        if (_lastClickMove != null) {
-          if (_lastClickMove?.square == halfMove.square) {
-            setLastClickMove(null);
-          } else if (_lastClickMove?.piece.color == halfMove.piece.color) {
-            setLastClickMove(halfMove);
-          } else {
-            widget.onMove(types.ShortMove(
-              from: _lastClickMove?.square ?? '',
-              to: halfMove.square,
-              promotion: types.PieceType.QUEEN,
-            ));
-          }
-          setLastClickMove(null);
-        } else {
+      onDrop: handleOnDrop,
+      onClick: handleOnClick,
+    );
+  }
+
+  void handleOnDrop(types.ShortMove move) {
+    widget.onMove(move);
+    clearLastClickMove();
+  }
+
+  void handleOnClick(types.HalfMove halfMove) {
+    _lastClickMove.ifPresent(
+      (t) {
+        if (t.square == halfMove.square) {
+          clearLastClickMove();
+        } else if (t.piece.color == halfMove.piece.color) {
           setLastClickMove(halfMove);
+        } else {
+          widget.onMove(types.ShortMove(
+            from: t.square,
+            to: halfMove.square,
+            promotion: types.PieceType.QUEEN,
+          ));
         }
+        clearLastClickMove();
+      },
+      orElse: () {
+        setLastClickMove(halfMove);
       },
     );
   }
 
-  void setLastClickMove(types.HalfMove? move) {
+  void clearLastClickMove() {
     setState(() {
-      _lastClickMove = move;
+      _lastClickMove = Optional.empty();
+    });
+  }
+
+  void setLastClickMove(types.HalfMove move) {
+    setState(() {
+      _lastClickMove = Optional.of(move);
     });
   }
 }
