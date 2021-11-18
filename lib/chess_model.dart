@@ -7,7 +7,7 @@ import 'package:fpdart/fpdart.dart';
 class ChessModel {
   final String fen;
   final double size;
-  final types.Color orientation;
+  final types.ChessColor orientation;
   final void Function(types.ShortMove move) onMove;
   final Color lightSquareColor;
   final Color darkSquareColor;

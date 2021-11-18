@@ -3,7 +3,7 @@ import 'package:fpdart/fpdart.dart';
 typedef PieceMap = Map<String, Option<Piece>>;
 
 class Piece {
-  final Color color;
+  final ChessColor color;
   final PieceType type;
 
   const Piece(this.color, this.type);
@@ -12,13 +12,13 @@ class Piece {
   String toString() => '$color$type';
 }
 
-class Color {
+class ChessColor {
   final int value;
 
-  const Color._value(this.value);
+  const ChessColor._value(this.value);
 
-  static const Color WHITE = const Color._value(0);
-  static const Color BLACK = const Color._value(1);
+  static const ChessColor WHITE = const ChessColor._value(0);
+  static const ChessColor BLACK = const ChessColor._value(1);
 
   int get hashCode => value;
 

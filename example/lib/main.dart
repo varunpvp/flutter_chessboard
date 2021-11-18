@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         child: cb.Chessboard(
           fen: _fen,
           size: size,
-          orientation: cb.Color.WHITE,
+          orientation: cb.ChessColor.WHITE,
           onMove: (move) {
             final nextFen = makeMove(_fen, {
               'from': move.from,

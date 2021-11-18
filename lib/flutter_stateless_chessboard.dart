@@ -13,7 +13,7 @@ final zeroToSeven = List.generate(8, (index) => index);
 class Chessboard extends StatefulWidget {
   final String fen;
   final double size;
-  final types.Color orientation;
+  final types.ChessColor orientation;
   final void Function(types.ShortMove move) onMove;
   final Color lightSquareColor;
   final Color darkSquareColor;
@@ -22,7 +22,7 @@ class Chessboard extends StatefulWidget {
   Chessboard({
     required this.fen,
     required this.size,
-    this.orientation = types.Color.WHITE,
+    this.orientation = types.ChessColor.WHITE,
     this.onMove = noop1,
     this.lightSquareColor = const Color.fromRGBO(240, 217, 181, 1),
     this.darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
