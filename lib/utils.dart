@@ -47,3 +47,5 @@ bool isPromoting(String fen, ShortMove move) {
 }
 
 noop1(arg1) {}
+
+Future<PieceType?> defaultPromoting() => Future.value(PieceType.QUEEN);

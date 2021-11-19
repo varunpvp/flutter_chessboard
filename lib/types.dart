@@ -1,5 +1,8 @@
 import 'package:fpdart/fpdart.dart';
 
+typedef Promoted = Future<PieceType?> Function();
+typedef Moved = void Function(ShortMove move);
+
 class Piece {
   final ChessColor color;
   final PieceType type;

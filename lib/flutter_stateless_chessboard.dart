@@ -18,9 +18,10 @@ class Chessboard extends StatefulWidget {
     required String fen,
     required double size,
     ChessColor orientation = ChessColor.WHITE,
-    void Function(ShortMove move) onMove = noop1,
     Color lightSquareColor = const Color.fromRGBO(240, 217, 181, 1),
     Color darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
+    Moved onMove = noop1,
+    Promoted onPromote = defaultPromoting,
   }) {
     model = ChessModel(
       fen: fen,
@@ -29,6 +30,7 @@ class Chessboard extends StatefulWidget {
       onMove: onMove,
       lightSquareColor: lightSquareColor,
       darkSquareColor: darkSquareColor,
+      onPromote: onPromote,
     );
   }
 
@@ -83,7 +85,7 @@ class _ChessboardState extends State<Chessboard> {
   }
 
   void handleOnDrop(ShortMove move) {
-    widget.model.onMove(move);
+    widget.model.makeMove(move);
     clearLastClickMove();
   }
 
@@ -100,7 +102,7 @@ class _ChessboardState extends State<Chessboard> {
         } else if (sameColorPiece) {
           setLastClickMove(halfMove);
         } else {
-          widget.model.onMove(ShortMove(
+          widget.model.makeMove(ShortMove(
             from: t.square,
             to: halfMove.square,
           ));
