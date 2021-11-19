@@ -1,4 +1,4 @@
-import 'package:flutter_stateless_chessboard/types.dart' as types;
+import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/utils.dart' as utils;
@@ -7,8 +7,8 @@ import 'package:fpdart/fpdart.dart';
 class ChessModel {
   final String fen;
   final double size;
-  final types.ChessColor orientation;
-  final void Function(types.ShortMove move) onMove;
+  final ChessColor orientation;
+  final void Function(ShortMove move) onMove;
   final Color lightSquareColor;
   final Color darkSquareColor;
 
@@ -23,7 +23,7 @@ class ChessModel {
 
   double get squareSize => size / 8;
 
-  types.PieceMap get pieceMap => getPieceMap(fen);
+  List<SquareModel> get squares => getSquares(fen);
 
   String getSquare(int rankIndex, int fileIndex) {
     return utils.getSquare(rankIndex, fileIndex, orientation);
@@ -35,9 +35,7 @@ class ChessModel {
         : darkSquareColor;
   }
 
-  Option<types.Piece> getPiece(String square) {
-    return Option.fromNullable(pieceMap[square]).flatMap(
-      (t) => t,
-    );
+  Option<Piece> getPiece(String square) {
+    return squares.firstWhere((t) => t.name == square).piece;
   }
 }

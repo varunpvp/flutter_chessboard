@@ -8,18 +8,19 @@ String getSquare(int rankIndex, int fileIndex, ChessColor orientation) {
   return '${String.fromCharCode(file + 97)}$rank';
 }
 
-PieceMap getPieceMap(String fen) {
+List<SquareModel> getSquares(String fen) {
   final chess = ch.Chess.fromFEN(fen);
-  final PieceMap map = Map();
-  ch.Chess.SQUARES.keys.toList().forEach((square) {
-    map[square] = Option.fromNullable(chess.get(square)).map(
-      (t) => Piece(
-        t.color == ch.Color.WHITE ? ChessColor.WHITE : ChessColor.BLACK,
-        PieceType.fromString(t.type.toString()),
+  return ch.Chess.SQUARES.keys.map((squareName) {
+    return SquareModel(
+      name: squareName,
+      piece: Option.fromNullable(chess.get(squareName)).map(
+        (t) => Piece(
+          t.color == ch.Color.WHITE ? ChessColor.WHITE : ChessColor.BLACK,
+          PieceType.fromString(t.type.toString()),
+        ),
       ),
     );
-  });
-  return map;
+  }).toList(growable: false);
 }
 
 bool isPromoting(String fen, ShortMove move) {

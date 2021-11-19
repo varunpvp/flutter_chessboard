@@ -1,7 +1,5 @@
 import 'package:fpdart/fpdart.dart';
 
-typedef PieceMap = Map<String, Option<Piece>>;
-
 class Piece {
   final ChessColor color;
   final PieceType type;
@@ -96,4 +94,14 @@ class HalfMove {
   String toString() {
     return "$square::$piece";
   }
+}
+
+class SquareModel {
+  final String name;
+  final Option<Piece> piece;
+
+  SquareModel({
+    required this.name,
+    required this.piece,
+  });
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Square extends StatelessWidget {
+class PlainSquare extends StatelessWidget {
   final Color color;
   final double size;
   final Widget? child;
   final bool highlight;
 
-  Square({
+  PlainSquare({
     required this.color,
     required this.size,
     this.child,
@@ -22,15 +22,13 @@ class Square extends StatelessWidget {
           height: size,
           width: size,
         ),
-        if (highlight == true)
+        if (highlight)
           Container(
             color: Color.fromRGBO(128, 128, 128, .3),
             height: size,
             width: size,
           ),
-        SizedBox(
-          child: child,
-        )
+        SizedBox(child: child)
       ],
     );
   }

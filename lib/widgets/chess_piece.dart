@@ -1,13 +1,13 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/types.dart' as types;
-import 'package:flutter_stateless_chessboard/widgets/square.dart';
+import 'package:flutter_stateless_chessboard/types.dart';
+import 'package:flutter_stateless_chessboard/widgets/plain_square.dart';
 import 'package:fpdart/fpdart.dart';
 
 class ChessPiece extends StatelessWidget {
   final String squareName;
   final Color squareColor;
-  final types.Piece piece;
+  final Piece piece;
   final double size;
 
   ChessPiece({
@@ -21,11 +21,11 @@ class ChessPiece extends StatelessWidget {
   Widget build(BuildContext context) {
     final pieceWidget = _buildPiece();
 
-    return Draggable<types.HalfMove>(
-      data: types.HalfMove(squareName, Option.of(piece)),
+    return Draggable<HalfMove>(
+      data: HalfMove(squareName, Option.of(piece)),
       child: pieceWidget,
       feedback: pieceWidget,
-      childWhenDragging: Square(
+      childWhenDragging: PlainSquare(
         color: squareColor,
         size: size,
       ),
