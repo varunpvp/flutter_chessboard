@@ -1,6 +1,7 @@
 import 'package:chess/chess.dart' as ch;
 import 'package:fpdart/fpdart.dart';
 
+import 'models/board.dart';
 import 'models/board_color.dart';
 import 'models/piece.dart';
 import 'models/piece_type.dart';
@@ -13,10 +14,11 @@ String getSquare(int rankIndex, int fileIndex, BoardColor orientation) {
   return '${String.fromCharCode(file + 97)}$rank';
 }
 
-List<Square> getSquares(String fen) {
-  final chess = ch.Chess.fromFEN(fen);
+List<Square> getSquares(Board board) {
+  final chess = ch.Chess.fromFEN(board.fen);
   return ch.Chess.SQUARES.keys.map((squareName) {
     return Square(
+      board: board,
       name: squareName,
       piece: Option.fromNullable(chess.get(squareName)).map(
         (t) => Piece(

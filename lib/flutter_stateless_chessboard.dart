@@ -3,13 +3,8 @@ library flutter_chessboard;
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
-import 'package:flutter_stateless_chessboard/widgets/ui_square.dart';
-import 'package:provider/provider.dart';
-
+import 'package:flutter_stateless_chessboard/widgets/ui_board.dart';
 import 'models/board_color.dart';
-import 'models/half_move.dart';
-import 'models/piece.dart';
-import 'models/short_move.dart';
 
 final zeroToSeven = List.generate(8, (index) => index);
 
@@ -34,6 +29,7 @@ class Chessboard extends StatefulWidget {
       darkSquareColor: darkSquareColor,
       onPromote: onPromote,
     );
+    print('new board');
   }
 
   @override
@@ -52,86 +48,21 @@ class _ChessboardState extends State<Chessboard> {
   }
 
   @override
+  void didChangeDependencies() {
+    print('didChangeDependencies');
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Provider.value(
-      value: widget.board,
-      child: Container(
-        width: widget.board.size,
-        height: widget.board.size,
-        child: _buildFiles(),
-      ),
-    );
-  }
-
-  Widget _buildFiles() {
-    return Row(
-      children: zeroToSeven.map((fileIndex) {
-        return _buildRank(fileIndex);
-      }).toList(growable: false),
-    );
-  }
-
-  Column _buildRank(int fileIndex) {
-    return Column(
-      children: zeroToSeven.map((rankIndex) {
-        final square = widget.board.getSquare(rankIndex, fileIndex);
-        final color = widget.board.getColor(rankIndex, fileIndex);
-        return _buildChessSquare(square, color);
-      }).toList(growable: false),
-    );
-  }
-
-  Widget _buildChessSquare(String square, Color color) {
-    return UISquare(
-      name: square,
-      color: color,
-      highlight:
-          board.clickMove.map((t) => t.square == square).getOrElse(() => false),
-      onDrop: handleOnDrop,
-      onClick: handleOnClick,
-    );
-  }
-
-  void handleOnDrop(ShortMove move) {
-    widget.board.makeMove(move);
-    clearLastClickMove();
-  }
-
-  void handleOnClick(HalfMove halfMove) {
-    board.clickMove.match(
-      (t) {
-        final sameSquare = t.square == halfMove.square;
-        final sameColorPiece = t.piece
-            .map2<Piece, bool>(halfMove.piece, (t, r) => t.color == r.color)
-            .getOrElse(() => false);
-
-        if (sameSquare) {
-          clearLastClickMove();
-        } else if (sameColorPiece) {
-          setLastClickMove(halfMove);
-        } else {
-          widget.board.makeMove(ShortMove(
-            from: t.square,
-            to: halfMove.square,
-          ));
-        }
-        clearLastClickMove();
-      },
-      () {
-        setLastClickMove(halfMove);
+    return UIBoard(
+      board: board,
+      onChange: (newBoard) {
+        print('onChange');
+        setState(() {
+          board = newBoard;
+        });
       },
     );
-  }
-
-  void clearLastClickMove() {
-    setState(() {
-      board = board.clearClickMove();
-    });
-  }
-
-  void setLastClickMove(HalfMove move) {
-    setState(() {
-      board = board.setClickMove(move);
-    });
   }
 }

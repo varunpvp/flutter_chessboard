@@ -38,7 +38,7 @@ class Board {
 
   double get squareSize => size / 8;
 
-  List<Square> get squares => utils.getSquares(fen);
+  List<Square> get squares => utils.getSquares(this);
 
   String getSquare(int rankIndex, int fileIndex) {
     return utils.getSquare(rankIndex, fileIndex, orientation);
@@ -54,24 +54,47 @@ class Board {
     return squares.firstWhere((t) => t.name == square).piece;
   }
 
-  Future<void> makeMove(ShortMove move) async {
+  Future<Board> makeMove(ShortMove move) async {
     if (utils.isPromoting(fen, move)) {
       final pieceType = await promotion;
-      pieceType.match(
+      return pieceType.match(
         (t) {
           _onMove(ShortMove(
             from: move.from,
             to: move.to,
             promotion: Option.of(t),
           ));
+          return clearClickMove();
         },
-        () {
-          // promotion cancelled
-        },
+        () => Future.error("Move cancelled"),
       );
     } else {
       _onMove(move);
+      return clearClickMove();
     }
+  }
+
+  Future<Board> squareClicked(HalfMove halfMove) async {
+    return clickMove.match(
+      (t) {
+        final sameSquare = t.square == halfMove.square;
+        final sameColorPiece = t.piece
+            .map2<Piece, bool>(halfMove.piece, (t, r) => t.color == r.color)
+            .getOrElse(() => false);
+
+        if (sameSquare) {
+          return clearClickMove();
+        } else if (sameColorPiece) {
+          return setClickMove(halfMove);
+        } else {
+          return makeMove(ShortMove(
+            from: t.square,
+            to: halfMove.square,
+          ));
+        }
+      },
+      () => setClickMove(halfMove),
+    );
   }
 
   Future<Option<PieceType>> get promotion async {
