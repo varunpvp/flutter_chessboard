@@ -23,7 +23,9 @@ class UIPiece extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final board = Provider.of<Board>(context);
-    final pieceWidget = board.buildPiece.getOrElse(() => _buildPiece)(piece);
+    final pieceWidget = board.buildPiece
+        .flatMap((t) => Option.fromNullable(t(piece, size)))
+        .getOrElse(() => _buildPiece(piece, size));
 
     return Draggable<HalfMove>(
       data: HalfMove(squareName, Option.of(piece)),
@@ -36,31 +38,31 @@ class UIPiece extends StatelessWidget {
     );
   }
 
-  Widget _buildPiece(Piece piece) {
-    switch (piece.toString()) {
-      case 'wr':
+  Widget _buildPiece(Piece piece, double size) {
+    switch (piece) {
+      case Piece.WHITE_ROOK:
         return WhiteRook(size: size);
-      case 'wn':
+      case Piece.WHITE_KNIGHT:
         return WhiteKnight(size: size);
-      case 'wb':
+      case Piece.WHITE_BISHOP:
         return WhiteBishop(size: size);
-      case 'wk':
+      case Piece.WHITE_KING:
         return WhiteKing(size: size);
-      case 'wq':
+      case Piece.WHITE_QUEEN:
         return WhiteQueen(size: size);
-      case 'wp':
+      case Piece.WHITE_PAWN:
         return WhitePawn(size: size);
-      case 'br':
+      case Piece.BLACK_ROOK:
         return BlackRook(size: size);
-      case 'bn':
+      case Piece.BLACK_KNIGHT:
         return BlackKnight(size: size);
-      case 'bb':
+      case Piece.BLACK_BISHOP:
         return BlackBishop(size: size);
-      case 'bk':
+      case Piece.BLACK_KING:
         return BlackKing(size: size);
-      case 'bq':
+      case Piece.BLACK_QUEEN:
         return BlackQueen(size: size);
-      case 'bp':
+      case Piece.BLACK_PAWN:
         return BlackPawn(size: size);
       default:
         return SizedBox();

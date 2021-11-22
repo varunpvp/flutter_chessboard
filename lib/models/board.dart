@@ -10,7 +10,7 @@ import 'square.dart';
 
 typedef Promoted = Future<PieceType?> Function();
 typedef Moved = void Function(ShortMove move);
-typedef BuildPiece = Widget Function(Piece piece);
+typedef BuildPiece = Widget? Function(Piece piece, double size);
 
 class Board {
   final String fen;
