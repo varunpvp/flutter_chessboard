@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart'
-    as cb;
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
 
 import 'utils.dart';
 
@@ -41,10 +40,10 @@ class _HomePageState extends State<HomePage> {
         title: Text("Random Chess"),
       ),
       body: Center(
-        child: cb.Chessboard(
+        child: Chessboard(
           fen: _fen,
           size: size,
-          orientation: cb.Color.WHITE,
+          orientation: BoardColor.WHITE,
           onMove: (move) {
             final nextFen = makeMove(_fen, {
               'from': move.from,

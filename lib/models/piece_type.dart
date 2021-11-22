@@ -1,35 +1,3 @@
-class Piece {
-  final PieceType type;
-  final Color color;
-
-  const Piece(this.type, this.color);
-
-  @override
-  String toString() => '$color$type';
-}
-
-class NoPiece extends Piece {
-  const NoPiece() : super(PieceType.NONE, Color.WHITE);
-}
-
-class Color {
-  final int value;
-
-  const Color._value(this.value);
-
-  static const Color WHITE = const Color._value(0);
-  static const Color BLACK = const Color._value(1);
-
-  int get hashCode => value;
-
-  String toString() => (this == WHITE) ? 'w' : 'b';
-
-  @override
-  bool operator ==(Object other) {
-    return other.runtimeType == runtimeType && hashCode == other.hashCode;
-  }
-}
-
 class PieceType {
   final String name;
 
@@ -41,7 +9,6 @@ class PieceType {
   static const PieceType ROOK = const PieceType._value('r');
   static const PieceType QUEEN = const PieceType._value('q');
   static const PieceType KING = const PieceType._value('k');
-  static const PieceType NONE = const PieceType._value('');
 
   factory PieceType.fromString(String value) {
     switch (value.toLowerCase()) {
@@ -57,8 +24,6 @@ class PieceType {
         return PieceType.QUEEN;
       case 'k':
         return PieceType.KING;
-      case '':
-        return PieceType.NONE;
       default:
         throw "Unknown piece type";
     }
@@ -76,23 +41,4 @@ class PieceType {
   bool operator ==(Object other) {
     return other.runtimeType == runtimeType && hashCode == other.hashCode;
   }
-}
-
-class ShortMove {
-  final String from;
-  final String to;
-  final PieceType promotion;
-
-  ShortMove({
-    required this.from,
-    required this.to,
-    required this.promotion,
-  });
-}
-
-class HalfMove {
-  final String square;
-  final Piece piece;
-
-  HalfMove(this.square, this.piece);
 }
