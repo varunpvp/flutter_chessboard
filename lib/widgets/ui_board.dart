@@ -7,7 +7,8 @@ class UIBoard extends StatelessWidget {
   final Board board;
   final void Function(Board board) onChange;
 
-  UIBoard({required this.board, required this.onChange});
+  UIBoard({Key? key, required this.board, required this.onChange})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -8,12 +8,6 @@ import 'models/piece_type.dart';
 import 'models/short_move.dart';
 import 'models/square.dart';
 
-String getSquare(int rankIndex, int fileIndex, BoardColor orientation) {
-  final rank = orientation == BoardColor.BLACK ? rankIndex + 1 : 8 - rankIndex;
-  final file = orientation == BoardColor.BLACK ? 7 - fileIndex : fileIndex;
-  return '${String.fromCharCode(file + 97)}$rank';
-}
-
 List<Square> getSquares(Board board) {
   final chess = ch.Chess.fromFEN(board.fen);
   return ch.Chess.SQUARES.keys.map((squareName) {

@@ -6,10 +6,8 @@ import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_board.dart';
 import 'models/board_color.dart';
 
-final zeroToSeven = List.generate(8, (index) => index);
-
 class Chessboard extends StatefulWidget {
-  late final Board board;
+  final Board board;
 
   Chessboard({
     required String fen,
@@ -19,18 +17,16 @@ class Chessboard extends StatefulWidget {
     Color darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
     Moved onMove = noop1,
     Promoted onPromote = defaultPromoting,
-  }) {
-    board = Board(
-      fen: fen,
-      size: size,
-      orientation: orientation,
-      onMove: onMove,
-      lightSquareColor: lightSquareColor,
-      darkSquareColor: darkSquareColor,
-      onPromote: onPromote,
-    );
-    print('new board');
-  }
+  })  : board = Board(
+          fen: fen,
+          size: size,
+          orientation: orientation,
+          onMove: onMove,
+          lightSquareColor: lightSquareColor,
+          darkSquareColor: darkSquareColor,
+          onPromote: onPromote,
+        ),
+        super(key: Key(fen));
 
   @override
   State<StatefulWidget> createState() {
@@ -48,17 +44,10 @@ class _ChessboardState extends State<Chessboard> {
   }
 
   @override
-  void didChangeDependencies() {
-    print('didChangeDependencies');
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return UIBoard(
       board: board,
       onChange: (newBoard) {
-        print('onChange');
         setState(() {
           board = newBoard;
         });

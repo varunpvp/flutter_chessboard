@@ -19,8 +19,8 @@ class Board {
   final Color lightSquareColor;
   final Color darkSquareColor;
   final Option<HalfMove> clickMove;
-  late final Moved _onMove;
-  late final Promoted _onPromote;
+  final Moved _onMove;
+  final Promoted _onPromote;
 
   Board({
     required this.fen,
@@ -31,28 +31,12 @@ class Board {
     required Moved onMove,
     required Promoted onPromote,
     this.clickMove = const None(),
-  }) {
-    _onMove = onMove;
-    _onPromote = onPromote;
-  }
+  })  : _onMove = onMove,
+        _onPromote = onPromote;
 
   double get squareSize => size / 8;
 
   List<Square> get squares => utils.getSquares(this);
-
-  String getSquare(int rankIndex, int fileIndex) {
-    return utils.getSquare(rankIndex, fileIndex, orientation);
-  }
-
-  Color getColor(int rankIndex, int fileIndex) {
-    return (rankIndex + fileIndex) % 2 == 0
-        ? lightSquareColor
-        : darkSquareColor;
-  }
-
-  Option<Piece> getPiece(String square) {
-    return squares.firstWhere((t) => t.name == square).piece;
-  }
 
   Future<Board> makeMove(ShortMove move) async {
     if (utils.isPromoting(fen, move)) {
