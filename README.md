@@ -79,7 +79,7 @@ Chessboard(
 );
 ```
 
-<img src="https://github.com/varunpvp/flutter_chessboard/blob/refactor/promotion.png" alt="Handling Promotion" width="400"/>
+<img src="https://github.com/varunpvp/flutter_chessboard/blob/refactor/promotion.gif" alt="Handling Promotion" width="400"/>
 
 ### Building Custom Pieces
 
