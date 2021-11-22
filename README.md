@@ -2,7 +2,7 @@
 
 A Stateless Chessboard Widget for Flutter. This package provides just the chessboard. The game logic can be implemented using [chess](https://pub.dev/packages/chess) library. Check example/main.dart file, for implementing game logic.
 
-![Simple Chess App](https://github.com/varunpvp/flutter_chessboard/blob/main/preview.gif)
+<img src="https://github.com/varunpvp/flutter_chessboard/blob/main/preview.gif" alt="Simple Chess App]" width="400"/>
 
 ### Using the Chessboard
 
@@ -79,7 +79,7 @@ Chessboard(
 );
 ```
 
-![Handling Promotion](https://github.com/varunpvp/flutter_chessboard/blob/refactor/promotion.gif)
+<img src="https://github.com/varunpvp/flutter_chessboard/blob/refactor/promotion.png" alt="Handling Promotion" width="400"/>
 
 ### Building Custom Pieces
 
