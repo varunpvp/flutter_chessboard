@@ -13,7 +13,6 @@ dependencies:
   chess_vectors_flutter: ^1.0.16
   chess: ^0.7.0
   fpdart: ^0.0.12
-  provider: ^6.0.1
 
 dev_dependencies:
   flutter_test:
