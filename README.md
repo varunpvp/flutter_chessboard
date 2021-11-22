@@ -17,21 +17,21 @@ import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart' 
 void main() {
   runApp(
     new MaterialApp(
-      home: new Scaffold(
-        body: new Center(
-          child: cb.Chessboard(
-            size: 300,
-            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-            onMove: (move) {  // optional
-              // TODO: process the move
-              print("move from ${move.from} to ${move.to}");
-            },
-            orientation: cb.Color.BLACK,  // optional
-            lightSquareColor: Color.fromRGBO(240, 217, 181, 1), // optional
-            darkSquareColor: Color.fromRGBO(181, 136, 99, 1), // optional
-          ),
+      home: Scaffold(
+      body: Center(
+        child: Chessboard(
+          size: 300,
+          fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          onMove: (move) {  // optional
+            // TODO: process the move
+            print("move from ${move.from} to ${move.to}");
+          },
+          orientation: BoardColor.BLACK,  // optional
+          lightSquareColor: Color.fromRGBO(240, 217, 181, 1), // optional
+          darkSquareColor: Color.fromRGBO(181, 136, 99, 1), // optional
         ),
       ),
+    ),
     ),
   );
 }
