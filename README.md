@@ -79,6 +79,8 @@ Chessboard(
 );
 ```
 
+![Handling Promotion](https://github.com/varunpvp/flutter_chessboard/blob/refactor/promotion.gif)
+
 ### Building Custom Pieces
 
 By default, library uses [chess_vectors_flutter](https://pub.dev/packages/chess_vectors_flutter) for pieces. But you can build your own piece widget by implementing `buildPiece` param. See below example.
@@ -107,7 +109,7 @@ Chessboard(
 
 If you don't return widget for a `PieceType` default widget will be rendered. This is how the above `Chessboard` will look.
 
-![Custom Piece Build](https://github.com/varunpvp/flutter_chessboard/blob/main/custom-pieces.png)
+![Custom Piece Build](https://github.com/varunpvp/flutter_chessboard/blob/refactor/custom-pieces.png)
 
 ## Parameters
 
