@@ -8,7 +8,7 @@ A Stateless Chessboard Widget for Flutter. This package provides just the chessb
 
 To use Chessboard widget, [add flutter_stateless_chessboard as a dependency](https://pub.dev/packages/flutter_stateless_chessboard/install) in your pubspec.yaml
 
-### Example
+### Simple Example
 
 ```
 void main() {
@@ -36,6 +36,79 @@ void main() {
 
 ```
 
+### Handling Promotion
+
+For handling promotion. You can implement `onPromote` param. And return the `PieceType` you want to promote to. See below example.
+
+```
+Chessboard(
+  fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  size: 400,
+  onMove: ...,
+  onPromote: () {
+    return showDialog<PieceType>(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text('Promotion'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: Text("Queen"),
+                onTap: () => navigator.pop(PieceType.QUEEN),
+              ),
+              ListTile(
+                title: Text("Rook"),
+                onTap: () => navigator.pop(PieceType.ROOK),
+              ),
+              ListTile(
+                title: Text("Bishop"),
+                onTap: () => navigator.pop(PieceType.BISHOP),
+              ),
+              ListTile(
+                title: Text("Knight"),
+                onTap: () => navigator.pop(PieceType.KNIGHT),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  },
+);
+```
+
+### Building Custom Pieces
+
+By default, library uses chess_vectors_flutter for pieces. But you can build your own piece widget by implementing `buildPiece` param. See below example.
+
+```
+Chessboard(
+  fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  size: 400,
+  buildPiece: (piece, size) {
+    if (piece == Piece.WHITE_PAWN) {
+      return Icon(
+        Icons.person,
+        size: size,
+        color: Colors.white,
+      );
+    } else if (piece == Piece.BLACK_PAWN) {
+      return Icon(
+        Icons.person,
+        size: size,
+        color: Colors.black,
+      );
+    }
+  },
+);
+```
+
+If you don't return widget for a `PieceType` default widget will be rendered. This is how the above `Chessboard` will look.
+
+![Custom Piece Build](https://github.com/varunpvp/flutter_chessboard/blob/main/custom-pieces.png)
+
 ## Parameters
 
 ### fen:
@@ -62,3 +135,10 @@ color of light square on chessboard.
 
 color of dart square on chessboard.
 
+### onPromote
+
+handle piece promotion
+
+### buildPiece
+
+handle building of custom piece
