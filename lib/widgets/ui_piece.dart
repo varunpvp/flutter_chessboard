@@ -1,9 +1,11 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_tile.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:provider/provider.dart';
 
 class UIPiece extends StatelessWidget {
   final String squareName;
@@ -20,7 +22,10 @@ class UIPiece extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pieceWidget = _buildPiece();
+    final board = Provider.of<Board>(context);
+    final pieceWidget = board.buildPiece
+        .flatMap((f) => Option.fromNullable(f(piece, size)))
+        .getOrElse(() => _buildPiece(piece, size));
 
     return Draggable<HalfMove>(
       data: HalfMove(squareName, Option.of(piece)),
@@ -33,34 +38,33 @@ class UIPiece extends StatelessWidget {
     );
   }
 
-  Widget _buildPiece() {
-    switch (piece.toString()) {
-      case 'wr':
-        return WhiteRook(size: size);
-      case 'wn':
-        return WhiteKnight(size: size);
-      case 'wb':
-        return WhiteBishop(size: size);
-      case 'wk':
-        return WhiteKing(size: size);
-      case 'wq':
-        return WhiteQueen(size: size);
-      case 'wp':
-        return WhitePawn(size: size);
-      case 'br':
-        return BlackRook(size: size);
-      case 'bn':
-        return BlackKnight(size: size);
-      case 'bb':
-        return BlackBishop(size: size);
-      case 'bk':
-        return BlackKing(size: size);
-      case 'bq':
-        return BlackQueen(size: size);
-      case 'bp':
-        return BlackPawn(size: size);
-      default:
-        return SizedBox();
+  Widget _buildPiece(Piece piece, double size) {
+    if (piece == Piece.WHITE_ROOK) {
+      return WhiteRook(size: size);
+    } else if (piece == Piece.WHITE_KNIGHT) {
+      return WhiteKnight(size: size);
+    } else if (piece == Piece.WHITE_BISHOP) {
+      return WhiteBishop(size: size);
+    } else if (piece == Piece.WHITE_KING) {
+      return WhiteKing(size: size);
+    } else if (piece == Piece.WHITE_QUEEN) {
+      return WhiteQueen(size: size);
+    } else if (piece == Piece.WHITE_PAWN) {
+      return WhitePawn(size: size);
+    } else if (piece == Piece.BLACK_ROOK) {
+      return BlackRook(size: size);
+    } else if (piece == Piece.BLACK_KNIGHT) {
+      return BlackKnight(size: size);
+    } else if (piece == Piece.BLACK_BISHOP) {
+      return BlackBishop(size: size);
+    } else if (piece == Piece.BLACK_KING) {
+      return BlackKing(size: size);
+    } else if (piece == Piece.BLACK_QUEEN) {
+      return BlackQueen(size: size);
+    } else if (piece == Piece.BLACK_PAWN) {
+      return BlackPawn(size: size);
+    } else {
+      return SizedBox();
     }
   }
 }
