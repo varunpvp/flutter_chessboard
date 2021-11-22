@@ -81,7 +81,7 @@ Chessboard(
 
 ### Building Custom Pieces
 
-By default, library uses chess_vectors_flutter for pieces. But you can build your own piece widget by implementing `buildPiece` param. See below example.
+By default, library uses [chess_vectors_flutter](https://pub.dev/packages/chess_vectors_flutter) for pieces. But you can build your own piece widget by implementing `buildPiece` param. See below example.
 
 ```
 Chessboard(
@@ -135,10 +135,10 @@ color of light square on chessboard.
 
 color of dart square on chessboard.
 
-### onPromote
+### onPromote (optional):
 
 handle piece promotion
 
-### buildPiece
+### buildPiece (optional):
 
 handle building of custom piece
