@@ -1,9 +1,11 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_tile.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:provider/provider.dart';
 
 class UIPiece extends StatelessWidget {
   final String squareName;
@@ -20,7 +22,8 @@ class UIPiece extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pieceWidget = _buildPiece();
+    final board = Provider.of<Board>(context);
+    final pieceWidget = board.buildPiece.getOrElse(() => _buildPiece)(piece);
 
     return Draggable<HalfMove>(
       data: HalfMove(squareName, Option.of(piece)),
@@ -33,7 +36,7 @@ class UIPiece extends StatelessWidget {
     );
   }
 
-  Widget _buildPiece() {
+  Widget _buildPiece(Piece piece) {
     switch (piece.toString()) {
       case 'wr':
         return WhiteRook(size: size);

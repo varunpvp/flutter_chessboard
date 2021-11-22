@@ -6,6 +6,7 @@ import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_square.dart';
 import 'package:fpdart/fpdart.dart' show Option;
+import 'package:provider/provider.dart';
 import 'models/board_color.dart';
 import 'models/piece.dart';
 import 'models/short_move.dart';
@@ -40,20 +41,23 @@ class _ChessboardState extends State<Chessboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.board.size,
-      height: widget.board.size,
-      child: Stack(
-        children: widget.board.squares
-            .map((it) => UISquare(
-                  square: it,
-                  onClick: handleClick,
-                  onDrop: handleDrop,
-                  highlight: clickMove
-                      .map((t) => t.square == it.name)
-                      .getOrElse(() => false),
-                ))
-            .toList(growable: false),
+    return Provider.value(
+      value: widget.board,
+      child: Container(
+        width: widget.board.size,
+        height: widget.board.size,
+        child: Stack(
+          children: widget.board.squares
+              .map((it) => UISquare(
+                    square: it,
+                    onClick: handleClick,
+                    onDrop: handleDrop,
+                    highlight: clickMove
+                        .map((t) => t.square == it.name)
+                        .getOrElse(() => false),
+                  ))
+              .toList(growable: false),
+        ),
       ),
     );
   }

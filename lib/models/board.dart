@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/utils.dart' as utils;
 import 'package:fpdart/fpdart.dart';
 
@@ -9,6 +10,7 @@ import 'square.dart';
 
 typedef Promoted = Future<PieceType?> Function();
 typedef Moved = void Function(ShortMove move);
+typedef BuildPiece = Widget Function(Piece piece);
 
 class Board {
   final String fen;
@@ -18,6 +20,7 @@ class Board {
   final Color darkSquareColor;
   final Moved _onMove;
   final Promoted _onPromote;
+  final Option<BuildPiece> buildPiece;
 
   Board({
     required this.fen,
@@ -27,8 +30,10 @@ class Board {
     required this.darkSquareColor,
     required Moved onMove,
     required Promoted onPromote,
+    BuildPiece? buildPiece,
   })  : _onMove = onMove,
-        _onPromote = onPromote;
+        _onPromote = onPromote,
+        buildPiece = Option.fromNullable(buildPiece);
 
   double get squareSize => size / 8;
 
