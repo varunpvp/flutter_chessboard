@@ -49,6 +49,8 @@ class _ChessboardState extends State<Chessboard> {
         width: widget.board.size,
         height: widget.board.size,
         child: Stack(
+          alignment: AlignmentDirectional.topStart,
+          textDirection: TextDirection.ltr,
           children: widget.board.squares
               .map((it) => UISquare(
                     square: it,

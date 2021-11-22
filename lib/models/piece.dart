@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:ui' show hashValues;
 
 import 'board_color.dart';
 import 'piece_type.dart';

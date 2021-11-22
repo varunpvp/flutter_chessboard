@@ -79,7 +79,7 @@ Chessboard(
 );
 ```
 
-<img src="https://github.com/varunpvp/flutter_chessboard/blob/refactor/promotion.gif" alt="Handling Promotion" width="400"/>
+<img src="https://github.com/varunpvp/flutter_chessboard/blob/main/promotion.gif" alt="Handling Promotion" width="400"/>
 
 ### Building Custom Pieces
 
@@ -109,7 +109,7 @@ Chessboard(
 
 If you don't return widget for a `PieceType` default widget will be rendered. This is how the above `Chessboard` will look.
 
-<img src="https://github.com/varunpvp/flutter_chessboard/blob/refactor/custom-pieces.png" alt="Custom Piece Build" width="400"/>
+<img src="https://github.com/varunpvp/flutter_chessboard/blob/main/custom-pieces.png" alt="Custom Piece Build" width="400"/>
 
 ## Parameters
 
