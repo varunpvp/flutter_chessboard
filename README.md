@@ -12,7 +12,7 @@ To use Chessboard widget, [add flutter_stateless_chessboard as a dependency](htt
 
 ```
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart' as cb;
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
 
 void main() {
   runApp(
