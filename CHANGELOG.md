@@ -27,3 +27,10 @@
 ## [0.0.7] - Oct 21, 2021.
 
 * Add null safety
+
+## [1.0.0] - Nov 22, 2021.
+
+* Improve types
+* Support promotion
+* Custom piece build
+* Fix bugs
