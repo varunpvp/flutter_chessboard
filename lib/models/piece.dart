@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'board_color.dart';
 import 'piece_type.dart';
 
@@ -29,4 +31,12 @@ class Piece {
 
   @override
   String toString() => '$color$type';
+
+  @override
+  bool operator ==(Object other) {
+    return other.runtimeType == runtimeType && hashCode == other.hashCode;
+  }
+
+  @override
+  int get hashCode => hashValues(color, type);
 }

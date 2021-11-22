@@ -6,7 +6,7 @@ class BoardColor {
   static const BoardColor WHITE = const BoardColor._value(0);
   static const BoardColor BLACK = const BoardColor._value(1);
 
-  int get hashCode => value;
+  int get hashCode => value.hashCode;
 
   String toString() => (this == WHITE) ? 'w' : 'b';
 

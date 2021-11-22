@@ -24,7 +24,7 @@ class UIPiece extends StatelessWidget {
   Widget build(BuildContext context) {
     final board = Provider.of<Board>(context);
     final pieceWidget = board.buildPiece
-        .flatMap((t) => Option.fromNullable(t(piece, size)))
+        .flatMap((f) => Option.fromNullable(f(piece, size)))
         .getOrElse(() => _buildPiece(piece, size));
 
     return Draggable<HalfMove>(
@@ -39,33 +39,32 @@ class UIPiece extends StatelessWidget {
   }
 
   Widget _buildPiece(Piece piece, double size) {
-    switch (piece) {
-      case Piece.WHITE_ROOK:
-        return WhiteRook(size: size);
-      case Piece.WHITE_KNIGHT:
-        return WhiteKnight(size: size);
-      case Piece.WHITE_BISHOP:
-        return WhiteBishop(size: size);
-      case Piece.WHITE_KING:
-        return WhiteKing(size: size);
-      case Piece.WHITE_QUEEN:
-        return WhiteQueen(size: size);
-      case Piece.WHITE_PAWN:
-        return WhitePawn(size: size);
-      case Piece.BLACK_ROOK:
-        return BlackRook(size: size);
-      case Piece.BLACK_KNIGHT:
-        return BlackKnight(size: size);
-      case Piece.BLACK_BISHOP:
-        return BlackBishop(size: size);
-      case Piece.BLACK_KING:
-        return BlackKing(size: size);
-      case Piece.BLACK_QUEEN:
-        return BlackQueen(size: size);
-      case Piece.BLACK_PAWN:
-        return BlackPawn(size: size);
-      default:
-        return SizedBox();
+    if (piece == Piece.WHITE_ROOK) {
+      return WhiteRook(size: size);
+    } else if (piece == Piece.WHITE_KNIGHT) {
+      return WhiteKnight(size: size);
+    } else if (piece == Piece.WHITE_BISHOP) {
+      return WhiteBishop(size: size);
+    } else if (piece == Piece.WHITE_KING) {
+      return WhiteKing(size: size);
+    } else if (piece == Piece.WHITE_QUEEN) {
+      return WhiteQueen(size: size);
+    } else if (piece == Piece.WHITE_PAWN) {
+      return WhitePawn(size: size);
+    } else if (piece == Piece.BLACK_ROOK) {
+      return BlackRook(size: size);
+    } else if (piece == Piece.BLACK_KNIGHT) {
+      return BlackKnight(size: size);
+    } else if (piece == Piece.BLACK_BISHOP) {
+      return BlackBishop(size: size);
+    } else if (piece == Piece.BLACK_KING) {
+      return BlackKing(size: size);
+    } else if (piece == Piece.BLACK_QUEEN) {
+      return BlackQueen(size: size);
+    } else if (piece == Piece.BLACK_PAWN) {
+      return BlackPawn(size: size);
+    } else {
+      return SizedBox();
     }
   }
 }
