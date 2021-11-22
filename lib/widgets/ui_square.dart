@@ -58,17 +58,15 @@ class UISquare extends StatelessWidget {
             height: square.size,
             width: square.size,
           ),
-        SizedBox(
-          child: square.piece.match(
-            (t) => UIPiece(
-              squareName: square.name,
-              squareColor: square.color,
-              piece: t,
-              size: square.size,
-            ),
-            () => null,
+        square.piece.match(
+          (t) => UIPiece(
+            squareName: square.name,
+            squareColor: square.color,
+            piece: t,
+            size: square.size,
           ),
-        ),
+          () => SizedBox(),
+        )
       ],
     );
   }
