@@ -2,9 +2,8 @@ library flutter_chessboard;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
-import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
-import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
+import 'package:flutter_stateless_chessboard/widgets/ui_square.dart';
 import 'package:fpdart/fpdart.dart' show Option;
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,6 @@ import 'models/board_color.dart';
 import 'models/half_move.dart';
 import 'models/piece.dart';
 import 'models/short_move.dart';
-export 'package:flutter_stateless_chessboard/types.dart';
 
 final zeroToSeven = List.generate(8, (index) => index);
 
@@ -79,7 +77,7 @@ class _ChessboardState extends State<Chessboard> {
   }
 
   Widget _buildChessSquare(String square, Color color) {
-    return ChessSquare(
+    return UISquare(
       name: square,
       color: color,
       highlight:

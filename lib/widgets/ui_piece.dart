@@ -2,16 +2,16 @@ import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
-import 'package:flutter_stateless_chessboard/widgets/plain_square.dart';
+import 'package:flutter_stateless_chessboard/widgets/ui_tile.dart';
 import 'package:fpdart/fpdart.dart';
 
-class ChessPiece extends StatelessWidget {
+class UIPiece extends StatelessWidget {
   final String squareName;
   final Color squareColor;
   final Piece piece;
   final double size;
 
-  ChessPiece({
+  UIPiece({
     required this.squareName,
     required this.squareColor,
     required this.piece,
@@ -26,7 +26,7 @@ class ChessPiece extends StatelessWidget {
       data: HalfMove(squareName, Option.of(piece)),
       child: pieceWidget,
       feedback: pieceWidget,
-      childWhenDragging: PlainSquare(
+      childWhenDragging: UITile(
         color: squareColor,
         size: size,
       ),
