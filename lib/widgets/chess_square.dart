@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/chess_model.dart';
+import 'package:flutter_stateless_chessboard/models/board.dart';
+import 'package:flutter_stateless_chessboard/models/half_move.dart';
+import 'package:flutter_stateless_chessboard/models/short_move.dart';
 import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/plain_square.dart';
@@ -22,7 +24,7 @@ class ChessSquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ChessModel>(context);
+    final model = Provider.of<Board>(context);
     final piece = model.getPiece(name);
     return DragTarget<HalfMove>(
       onWillAccept: (data) {

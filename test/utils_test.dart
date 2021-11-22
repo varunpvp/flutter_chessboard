@@ -1,4 +1,4 @@
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
+import 'package:flutter_stateless_chessboard/models/short_move.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 

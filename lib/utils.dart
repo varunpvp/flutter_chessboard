@@ -1,21 +1,26 @@
 import 'package:chess/chess.dart' as ch;
-import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:fpdart/fpdart.dart';
 
-String getSquare(int rankIndex, int fileIndex, ChessColor orientation) {
-  final rank = orientation == ChessColor.BLACK ? rankIndex + 1 : 8 - rankIndex;
-  final file = orientation == ChessColor.BLACK ? 7 - fileIndex : fileIndex;
+import 'models/board_color.dart';
+import 'models/piece.dart';
+import 'models/piece_type.dart';
+import 'models/short_move.dart';
+import 'models/square.dart';
+
+String getSquare(int rankIndex, int fileIndex, BoardColor orientation) {
+  final rank = orientation == BoardColor.BLACK ? rankIndex + 1 : 8 - rankIndex;
+  final file = orientation == BoardColor.BLACK ? 7 - fileIndex : fileIndex;
   return '${String.fromCharCode(file + 97)}$rank';
 }
 
-List<SquareModel> getSquares(String fen) {
+List<Square> getSquares(String fen) {
   final chess = ch.Chess.fromFEN(fen);
   return ch.Chess.SQUARES.keys.map((squareName) {
-    return SquareModel(
+    return Square(
       name: squareName,
       piece: Option.fromNullable(chess.get(squareName)).map(
         (t) => Piece(
-          t.color == ch.Color.WHITE ? ChessColor.WHITE : ChessColor.BLACK,
+          t.color == ch.Color.WHITE ? BoardColor.WHITE : BoardColor.BLACK,
           PieceType.fromString(t.type.toString()),
         ),
       ),

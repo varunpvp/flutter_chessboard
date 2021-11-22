@@ -1,6 +1,7 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/types.dart';
+import 'package:flutter_stateless_chessboard/models/half_move.dart';
+import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/plain_square.dart';
 import 'package:fpdart/fpdart.dart';
 

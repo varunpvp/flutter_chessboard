@@ -1,29 +1,34 @@
 library flutter_chessboard;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/chess_model.dart';
+import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/types.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/chess_square.dart';
 import 'package:fpdart/fpdart.dart' show Option;
 import 'package:provider/provider.dart';
+
+import 'models/board_color.dart';
+import 'models/half_move.dart';
+import 'models/piece.dart';
+import 'models/short_move.dart';
 export 'package:flutter_stateless_chessboard/types.dart';
 
 final zeroToSeven = List.generate(8, (index) => index);
 
 class Chessboard extends StatefulWidget {
-  late final ChessModel model;
+  late final Board model;
 
   Chessboard({
     required String fen,
     required double size,
-    ChessColor orientation = ChessColor.WHITE,
+    BoardColor orientation = BoardColor.WHITE,
     Color lightSquareColor = const Color.fromRGBO(240, 217, 181, 1),
     Color darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
     Moved onMove = noop1,
     Promoted onPromote = defaultPromoting,
   }) {
-    model = ChessModel(
+    model = Board(
       fen: fen,
       size: size,
       orientation: orientation,

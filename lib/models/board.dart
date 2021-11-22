@@ -1,19 +1,26 @@
-import 'package:flutter_stateless_chessboard/types.dart';
-import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/utils.dart' as utils;
 import 'package:fpdart/fpdart.dart';
 
-class ChessModel {
+import 'board_color.dart';
+import 'piece.dart';
+import 'piece_type.dart';
+import 'short_move.dart';
+import 'square.dart';
+
+typedef Promoted = Future<PieceType?> Function();
+typedef Moved = void Function(ShortMove move);
+
+class Board {
   final String fen;
   final double size;
-  final ChessColor orientation;
+  final BoardColor orientation;
   final Color lightSquareColor;
   final Color darkSquareColor;
   late final Moved _onMove;
   late final Promoted _onPromote;
 
-  ChessModel({
+  Board({
     required this.fen,
     required this.size,
     required this.orientation,
@@ -28,7 +35,7 @@ class ChessModel {
 
   double get squareSize => size / 8;
 
-  List<SquareModel> get squares => getSquares(fen);
+  List<Square> get squares => utils.getSquares(fen);
 
   String getSquare(int rankIndex, int fileIndex) {
     return utils.getSquare(rankIndex, fileIndex, orientation);
@@ -45,7 +52,7 @@ class ChessModel {
   }
 
   Future<void> makeMove(ShortMove move) async {
-    if (isPromoting(fen, move)) {
+    if (utils.isPromoting(fen, move)) {
       final pieceType = await promotion;
       pieceType.match(
         (t) {
