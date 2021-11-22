@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_square.dart';
-import 'package:fpdart/fpdart.dart' show Option;
 import 'package:provider/provider.dart';
 
 import 'models/board_color.dart';
@@ -15,7 +14,7 @@ import 'models/short_move.dart';
 final zeroToSeven = List.generate(8, (index) => index);
 
 class Chessboard extends StatefulWidget {
-  late final Board model;
+  late final Board board;
 
   Chessboard({
     required String fen,
@@ -26,7 +25,7 @@ class Chessboard extends StatefulWidget {
     Moved onMove = noop1,
     Promoted onPromote = defaultPromoting,
   }) {
-    model = Board(
+    board = Board(
       fen: fen,
       size: size,
       orientation: orientation,
@@ -44,15 +43,21 @@ class Chessboard extends StatefulWidget {
 }
 
 class _ChessboardState extends State<Chessboard> {
-  Option<HalfMove> _lastClickMove = Option.none();
+  late Board board;
+
+  @override
+  void initState() {
+    board = widget.board;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Provider.value(
-      value: widget.model,
+      value: widget.board,
       child: Container(
-        width: widget.model.size,
-        height: widget.model.size,
+        width: widget.board.size,
+        height: widget.board.size,
         child: _buildFiles(),
       ),
     );
@@ -69,8 +74,8 @@ class _ChessboardState extends State<Chessboard> {
   Column _buildRank(int fileIndex) {
     return Column(
       children: zeroToSeven.map((rankIndex) {
-        final square = widget.model.getSquare(rankIndex, fileIndex);
-        final color = widget.model.getColor(rankIndex, fileIndex);
+        final square = widget.board.getSquare(rankIndex, fileIndex);
+        final color = widget.board.getColor(rankIndex, fileIndex);
         return _buildChessSquare(square, color);
       }).toList(growable: false),
     );
@@ -81,19 +86,19 @@ class _ChessboardState extends State<Chessboard> {
       name: square,
       color: color,
       highlight:
-          _lastClickMove.map((t) => t.square == square).getOrElse(() => false),
+          board.clickMove.map((t) => t.square == square).getOrElse(() => false),
       onDrop: handleOnDrop,
       onClick: handleOnClick,
     );
   }
 
   void handleOnDrop(ShortMove move) {
-    widget.model.makeMove(move);
+    widget.board.makeMove(move);
     clearLastClickMove();
   }
 
   void handleOnClick(HalfMove halfMove) {
-    _lastClickMove.match(
+    board.clickMove.match(
       (t) {
         final sameSquare = t.square == halfMove.square;
         final sameColorPiece = t.piece
@@ -105,7 +110,7 @@ class _ChessboardState extends State<Chessboard> {
         } else if (sameColorPiece) {
           setLastClickMove(halfMove);
         } else {
-          widget.model.makeMove(ShortMove(
+          widget.board.makeMove(ShortMove(
             from: t.square,
             to: halfMove.square,
           ));
@@ -120,13 +125,13 @@ class _ChessboardState extends State<Chessboard> {
 
   void clearLastClickMove() {
     setState(() {
-      _lastClickMove = Option.none();
+      board = board.clearClickMove();
     });
   }
 
   void setLastClickMove(HalfMove move) {
     setState(() {
-      _lastClickMove = Option.of(move);
+      board = board.setClickMove(move);
     });
   }
 }
