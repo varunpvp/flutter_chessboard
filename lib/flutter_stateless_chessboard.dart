@@ -2,9 +2,13 @@ library flutter_chessboard;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
+import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
-import 'package:flutter_stateless_chessboard/widgets/ui_board.dart';
+import 'package:flutter_stateless_chessboard/widgets/ui_square.dart';
+import 'package:fpdart/fpdart.dart' show Option;
 import 'models/board_color.dart';
+import 'models/piece.dart';
+import 'models/short_move.dart';
 
 class Chessboard extends StatefulWidget {
   final Board board;
@@ -17,7 +21,7 @@ class Chessboard extends StatefulWidget {
     Color darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
     Moved onMove = noop1,
     Promoted onPromote = defaultPromoting,
-  })  : board = Board(
+  }) : board = Board(
           fen: fen,
           size: size,
           orientation: orientation,
@@ -25,33 +29,74 @@ class Chessboard extends StatefulWidget {
           lightSquareColor: lightSquareColor,
           darkSquareColor: darkSquareColor,
           onPromote: onPromote,
-        ),
-        super(key: Key(fen));
+        );
 
   @override
-  State<StatefulWidget> createState() {
-    return _ChessboardState();
-  }
+  State<StatefulWidget> createState() => _ChessboardState();
 }
 
 class _ChessboardState extends State<Chessboard> {
-  late Board board;
-
-  @override
-  void initState() {
-    board = widget.board;
-    super.initState();
-  }
+  Option<HalfMove> clickMove = Option.none();
 
   @override
   Widget build(BuildContext context) {
-    return UIBoard(
-      board: board,
-      onChange: (newBoard) {
-        setState(() {
-          board = newBoard;
-        });
-      },
+    return Container(
+      width: widget.board.size,
+      height: widget.board.size,
+      child: Stack(
+        children: widget.board.squares
+            .map((it) => UISquare(
+                  square: it,
+                  onClick: handleClick,
+                  onDrop: handleDrop,
+                  highlight: clickMove
+                      .map((t) => t.square == it.name)
+                      .getOrElse(() => false),
+                ))
+            .toList(growable: false),
+      ),
     );
+  }
+
+  void handleDrop(ShortMove move) {
+    widget.board.makeMove(move).then((_) {
+      clearClickMove();
+    });
+  }
+
+  void handleClick(HalfMove halfMove) {
+    clickMove.match(
+      (t) {
+        final sameSquare = t.square == halfMove.square;
+        final sameColorPiece = t.piece
+            .map2<Piece, bool>(halfMove.piece, (t, r) => t.color == r.color)
+            .getOrElse(() => false);
+
+        if (sameSquare) {
+          clearClickMove();
+        } else if (sameColorPiece) {
+          setClickMove(halfMove);
+        } else {
+          widget.board.makeMove(ShortMove(
+            from: t.square,
+            to: halfMove.square,
+          ));
+          clearClickMove();
+        }
+      },
+      () => setClickMove(halfMove),
+    );
+  }
+
+  void setClickMove(HalfMove halfMove) {
+    setState(() {
+      clickMove = Option.of(halfMove).flatMap((t) => t.piece.map((_) => t));
+    });
+  }
+
+  void clearClickMove() {
+    setState(() {
+      clickMove = Option.none();
+    });
   }
 }

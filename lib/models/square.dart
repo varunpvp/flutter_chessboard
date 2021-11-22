@@ -40,8 +40,5 @@ class Square {
         : board.darkSquareColor;
   }
 
-  bool get isClicked =>
-      board.clickMove.map((t) => t.square == name).getOrElse(() => false);
-
   double get size => board.squareSize;
 }
