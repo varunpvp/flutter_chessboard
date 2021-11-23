@@ -1,5 +1,3 @@
-
-
 import 'package:fpdart/fpdart.dart';
 
 import 'piece.dart';

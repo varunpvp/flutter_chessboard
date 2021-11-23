@@ -34,3 +34,7 @@
 * Support promotion
 * Custom piece build
 * Fix bugs
+
+## [1.0.1] - Nov 23, 2021.
+
+* Fix black orientation board issue
