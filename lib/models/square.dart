@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/models/coorddinate.dart';
+import 'package:flutter_stateless_chessboard/models/coordinate.dart';
 import 'package:fpdart/fpdart.dart';
 
 import 'board.dart';
