@@ -18,7 +18,7 @@ class Square {
 
   int get xAxis {
     final i = file.codeUnitAt(0) - 97;
-    return board.orientation == BoardColor.BLACK ? i - 7 : i;
+    return board.orientation == BoardColor.BLACK ? 7 - i : i;
   }
 
   int get yAxis {
