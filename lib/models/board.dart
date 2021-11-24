@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/models/blocked_square.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/utils.dart' as utils;
 import 'package:fpdart/fpdart.dart';
@@ -24,7 +23,6 @@ class Board {
   final Promoted _onPromote;
   final Option<BuildPiece> buildPiece;
   final Option<BuildSquare> buildSquare;
-  final List<BlockedSquare> blockedSquares;
 
   Board({
     required this.fen,
@@ -32,7 +30,6 @@ class Board {
     required this.orientation,
     required this.lightSquareColor,
     required this.darkSquareColor,
-    required this.blockedSquares,
     required Moved onMove,
     required Promoted onPromote,
     BuildPiece? buildPiece,

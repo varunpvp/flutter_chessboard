@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/short_move.dart';
 import 'package:flutter_stateless_chessboard/models/square.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_tile.dart';
-import 'package:provider/provider.dart';
-import 'package:fpdart/fpdart.dart';
 
 class UISquare extends StatelessWidget {
   final Square square;
@@ -23,18 +20,12 @@ class UISquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final board = Provider.of<Board>(context);
-
     return Positioned(
       left: square.x,
       top: square.y,
       width: square.size,
       height: square.size,
-      child: board.blockedSquares
-          .where((e) => e.square == square.name)
-          .firstOption
-          .map((t) => t.builder(square))
-          .getOrElse(() => _buildSquare()),
+      child: _buildSquare(),
     );
   }
 
