@@ -34,8 +34,12 @@ class Square {
 
   String get rank => name.substring(1);
 
+  BoardColor get boardColor {
+    return (xAxis + yAxis) % 2 == 0 ? BoardColor.WHITE : BoardColor.BLACK;
+  }
+
   Color get color {
-    return (xAxis + yAxis) % 2 == 0
+    return boardColor == BoardColor.WHITE
         ? board.lightSquareColor
         : board.darkSquareColor;
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/short_move.dart';
 import 'package:flutter_stateless_chessboard/models/square.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_tile.dart';
+import 'package:provider/provider.dart';
+import 'package:fpdart/fpdart.dart';
 
 class UISquare extends StatelessWidget {
   final Square square;
@@ -20,54 +23,60 @@ class UISquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final board = Provider.of<Board>(context);
+
     return Positioned(
       left: square.x,
       top: square.y,
       width: square.size,
       height: square.size,
-      child: DragTarget<HalfMove>(
-        onWillAccept: (data) {
-          return data?.square != square.name;
-        },
-        onAccept: (data) {
-          onDrop(ShortMove(
-            from: data.square,
-            to: square.name,
-          ));
-        },
-        builder: (context, candidateData, rejectedData) {
-          return InkWell(
-            onTap: () => onClick(HalfMove(square.name, square.piece)),
-            child: _buildSquare(),
-          );
-        },
-      ),
+      child: board.blockedSquares
+          .where((e) => e.square == square.name)
+          .firstOption
+          .map((t) => t.builder(square))
+          .getOrElse(() => _buildSquare()),
     );
   }
 
   Widget _buildSquare() {
-    return Stack(
-      children: [
-        UITile(
-          color: square.color,
-          size: square.size,
-        ),
-        if (highlight)
-          Container(
-            color: Color.fromRGBO(128, 128, 128, .3),
-            height: square.size,
-            width: square.size,
+    return DragTarget<HalfMove>(
+      onWillAccept: (data) {
+        return data?.square != square.name;
+      },
+      onAccept: (data) {
+        onDrop(ShortMove(
+          from: data.square,
+          to: square.name,
+        ));
+      },
+      builder: (context, candidateData, rejectedData) {
+        return InkWell(
+          onTap: () => onClick(HalfMove(square.name, square.piece)),
+          child: Stack(
+            children: [
+              UITile(
+                color: square.color,
+                size: square.size,
+              ),
+              if (highlight)
+                Container(
+                  color: Color.fromRGBO(128, 128, 128, .3),
+                  height: square.size,
+                  width: square.size,
+                ),
+              square.piece.match(
+                (t) => UIPiece(
+                  squareName: square.name,
+                  squareColor: square.color,
+                  piece: t,
+                  size: square.size,
+                ),
+                () => SizedBox(),
+              )
+            ],
           ),
-        square.piece.match(
-          (t) => UIPiece(
-            squareName: square.name,
-            squareColor: square.color,
-            piece: t,
-            size: square.size,
-          ),
-          () => SizedBox(),
-        )
-      ],
+        );
+      },
     );
   }
 }
