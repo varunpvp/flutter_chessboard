@@ -55,7 +55,7 @@ class UISquare extends StatelessWidget {
           child: Stack(
             children: [
               UITile(
-                color: square.boardColor,
+                color: square.color,
                 size: square.size,
               ),
               if (highlight)
@@ -67,7 +67,7 @@ class UISquare extends StatelessWidget {
               square.piece.match(
                 (t) => UIPiece(
                   squareName: square.name,
-                  squareColor: square.boardColor,
+                  squareColor: square.color,
                   piece: t,
                   size: square.size,
                 ),
