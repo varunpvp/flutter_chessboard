@@ -24,6 +24,13 @@ class UIPiece extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final board = Provider.of<Board>(context);
+
+    return board.buildCustomPiece
+        .flatMap((t) => Option.fromNullable(t(size, squareName)))
+        .getOrElse(() => _buildMovablePiece(board));
+  }
+
+  Widget _buildMovablePiece(Board board) {
     final pieceWidget = board.buildPiece
         .flatMap((f) => Option.fromNullable(f(piece, size)))
         .getOrElse(() => _buildPiece(piece, size));

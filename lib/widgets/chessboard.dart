@@ -24,6 +24,7 @@ class Chessboard extends StatefulWidget {
     Promoted onPromote = defaultPromoting,
     BuildPiece? buildPiece,
     BuildSquare? buildSquare,
+    BuildCustomPiece? buildCustomPiece,
   }) : board = Board(
           fen: fen,
           size: size,
@@ -34,6 +35,7 @@ class Chessboard extends StatefulWidget {
           onPromote: onPromote,
           buildPiece: buildPiece,
           buildSquare: buildSquare,
+          buildCustomPiece: buildCustomPiece,
         );
 
   @override
