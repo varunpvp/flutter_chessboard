@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
+import 'package:flutter_stateless_chessboard/models/board.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:provider/provider.dart';
 
 class UITile extends StatelessWidget {
-  final Color color;
+  final BoardColor color;
   final double size;
 
   UITile({
@@ -11,10 +15,16 @@ class UITile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      height: size,
-      width: size,
-    );
+    final board = Provider.of<Board>(context);
+
+    return board.buildSquare
+        .flatMap((t) => Option.fromNullable(t(size, color)))
+        .getOrElse(() => Container(
+              color: color == BoardColor.WHITE
+                  ? board.lightSquareColor
+                  : board.darkSquareColor,
+              height: size,
+              width: size,
+            ));
   }
 }

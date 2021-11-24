@@ -1,5 +1,6 @@
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
@@ -9,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class UIPiece extends StatelessWidget {
   final String squareName;
-  final Color squareColor;
+  final BoardColor squareColor;
   final Piece piece;
   final double size;
 

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/models/board_color.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -34,14 +33,8 @@ class Square {
 
   String get rank => name.substring(1);
 
-  BoardColor get boardColor {
+  BoardColor get color {
     return (xAxis + yAxis) % 2 == 0 ? BoardColor.WHITE : BoardColor.BLACK;
-  }
-
-  Color get color {
-    return boardColor == BoardColor.WHITE
-        ? board.lightSquareColor
-        : board.darkSquareColor;
   }
 
   double get size => board.squareSize;
