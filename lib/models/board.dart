@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/models/blocked_square.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/utils.dart' as utils;
 import 'package:fpdart/fpdart.dart';
@@ -13,6 +12,7 @@ typedef Promoted = Future<PieceType?> Function();
 typedef Moved = void Function(ShortMove move);
 typedef BuildPiece = Widget? Function(Piece piece, double size);
 typedef BuildSquare = Widget? Function(BoardColor color, double size);
+typedef BuildCustomPiece = Widget? Function(double size, String square);
 
 class Board {
   final String fen;
@@ -24,7 +24,7 @@ class Board {
   final Promoted _onPromote;
   final Option<BuildPiece> buildPiece;
   final Option<BuildSquare> buildSquare;
-  final List<BlockedSquare> blockedSquares;
+  final Option<BuildCustomPiece> buildCustomPiece;
 
   Board({
     required this.fen,
@@ -32,15 +32,16 @@ class Board {
     required this.orientation,
     required this.lightSquareColor,
     required this.darkSquareColor,
-    required this.blockedSquares,
     required Moved onMove,
     required Promoted onPromote,
     BuildPiece? buildPiece,
     BuildSquare? buildSquare,
+    BuildCustomPiece? buildCustomPiece,
   })  : _onMove = onMove,
         _onPromote = onPromote,
         buildPiece = Option.fromNullable(buildPiece),
-        buildSquare = Option.fromNullable(buildSquare);
+        buildSquare = Option.fromNullable(buildSquare),
+        buildCustomPiece = Option.fromNullable(buildCustomPiece);
 
   double get squareSize => size / 8;
 

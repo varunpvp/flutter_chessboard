@@ -1,7 +1,6 @@
 library flutter_chessboard;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_stateless_chessboard/models/blocked_square.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/board_color.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
@@ -23,9 +22,9 @@ class Chessboard extends StatefulWidget {
     Color darkSquareColor = const Color.fromRGBO(181, 136, 99, 1),
     Moved onMove = noop1,
     Promoted onPromote = defaultPromoting,
-    List<BlockedSquare> blockedSquares = const [],
     BuildPiece? buildPiece,
     BuildSquare? buildSquare,
+    BuildCustomPiece? buildCustomPiece,
   }) : board = Board(
           fen: fen,
           size: size,
@@ -36,7 +35,7 @@ class Chessboard extends StatefulWidget {
           onPromote: onPromote,
           buildPiece: buildPiece,
           buildSquare: buildSquare,
-          blockedSquares: blockedSquares,
+          buildCustomPiece: buildCustomPiece,
         );
 
   @override

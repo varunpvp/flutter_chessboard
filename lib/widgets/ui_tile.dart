@@ -18,7 +18,7 @@ class UITile extends StatelessWidget {
     final board = Provider.of<Board>(context);
 
     return board.buildSquare
-        .flatMap((t) => Option.fromNullable(t(size, color)))
+        .flatMap((t) => Option.fromNullable(t(color, size)))
         .getOrElse(() => Container(
               color: color == BoardColor.WHITE
                   ? board.lightSquareColor
