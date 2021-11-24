@@ -25,6 +25,7 @@ class Chessboard extends StatefulWidget {
     Promoted onPromote = defaultPromoting,
     List<BlockedSquare> blockedSquares = const [],
     BuildPiece? buildPiece,
+    BuildSquare? buildSquare,
   }) : board = Board(
           fen: fen,
           size: size,
@@ -34,6 +35,7 @@ class Chessboard extends StatefulWidget {
           darkSquareColor: darkSquareColor,
           onPromote: onPromote,
           buildPiece: buildPiece,
+          buildSquare: buildSquare,
           blockedSquares: blockedSquares,
         );
 
