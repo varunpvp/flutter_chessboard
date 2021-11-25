@@ -12,7 +12,7 @@ typedef Promoted = Future<PieceType?> Function();
 typedef Moved = void Function(ShortMove move);
 typedef BuildPiece = Widget? Function(Piece piece, double size);
 typedef BuildSquare = Widget? Function(BoardColor color, double size);
-typedef BuildCustomPiece = Widget? Function(double size, String square);
+typedef BuildCustomPiece = Widget? Function(Square square);
 
 class Board {
   final String fen;
