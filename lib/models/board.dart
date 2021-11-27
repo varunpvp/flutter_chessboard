@@ -11,6 +11,8 @@ import 'square.dart';
 typedef Promoted = Future<PieceType?> Function();
 typedef Moved = void Function(ShortMove move);
 typedef BuildPiece = Widget? Function(Piece piece, double size);
+typedef BuildSquare = Widget? Function(BoardColor color, double size);
+typedef BuildCustomPiece = Widget? Function(Square square);
 
 class Board {
   final String fen;
@@ -21,6 +23,8 @@ class Board {
   final Moved _onMove;
   final Promoted _onPromote;
   final Option<BuildPiece> buildPiece;
+  final Option<BuildSquare> buildSquare;
+  final Option<BuildCustomPiece> buildCustomPiece;
 
   Board({
     required this.fen,
@@ -31,9 +35,13 @@ class Board {
     required Moved onMove,
     required Promoted onPromote,
     BuildPiece? buildPiece,
+    BuildSquare? buildSquare,
+    BuildCustomPiece? buildCustomPiece,
   })  : _onMove = onMove,
         _onPromote = onPromote,
-        buildPiece = Option.fromNullable(buildPiece);
+        buildPiece = Option.fromNullable(buildPiece),
+        buildSquare = Option.fromNullable(buildSquare),
+        buildCustomPiece = Option.fromNullable(buildCustomPiece);
 
   double get squareSize => size / 8;
 
