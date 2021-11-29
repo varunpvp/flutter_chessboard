@@ -38,3 +38,7 @@
 ## [1.0.1] - Nov 23, 2021.
 
 * Fix black orientation board issue
+
+## [1.1.1] - Nov 29, 2021.
+
+* buildCustomPiece
