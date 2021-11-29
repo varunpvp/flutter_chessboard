@@ -17,7 +17,7 @@ class Coordinate {
 
   int get xAxis {
     final i = file.codeUnitAt(0) - 97;
-    return orientation == BoardColor.BLACK ? i - 7 : i;
+    return orientation == BoardColor.BLACK ? 7 - i : i;
   }
 
   int get yAxis {
@@ -28,4 +28,8 @@ class Coordinate {
   double get x => xAxis * size;
 
   double get y => yAxis * size;
+
+  BoardColor get color {
+    return (xAxis + yAxis) % 2 == 0 ? BoardColor.WHITE : BoardColor.BLACK;
+  }
 }
