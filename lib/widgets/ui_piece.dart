@@ -30,8 +30,10 @@ class UIPiece extends StatelessWidget {
 
     return Draggable<HalfMove>(
       data: HalfMove(squareName, Option.of(piece)),
+      dragAnchorStrategy: pointerDragAnchorStrategy,
       child: pieceWidget,
-      feedback: pieceWidget,
+      feedback: FractionalTranslation(
+          translation: const Offset(-0.5, -0.5), child: pieceWidget),
       childWhenDragging: UITile(
         color: squareColor,
         size: size,
