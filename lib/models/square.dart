@@ -1,10 +1,11 @@
-import 'package:flutter_stateless_chessboard/models/board_color.dart';
 import 'package:fpdart/fpdart.dart';
 
+import 'board_color.dart';
+import 'coordinate.dart';
 import 'board.dart';
 import 'piece.dart';
 
-class Square {
+class Square extends Coordinate {
   final Board board;
   final String name;
   final Option<Piece> piece;
@@ -13,7 +14,11 @@ class Square {
     required this.board,
     required this.name,
     required this.piece,
-  });
+  }) : super(
+          orientation: board.orientation,
+          square: name,
+          size: board.squareSize,
+        );
 
   int get xAxis {
     final i = file.codeUnitAt(0) - 97;
@@ -36,6 +41,4 @@ class Square {
   BoardColor get color {
     return (xAxis + yAxis) % 2 == 0 ? BoardColor.WHITE : BoardColor.BLACK;
   }
-
-  double get size => board.squareSize;
 }
