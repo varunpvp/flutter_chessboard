@@ -45,30 +45,33 @@ class UISquare extends StatelessWidget {
         ));
       },
       builder: (context, candidateData, rejectedData) {
-        return InkWell(
-          onTap: () => onClick(HalfMove(square.name, square.piece)),
-          child: Stack(
-            children: [
-              UITile(
-                color: square.color,
-                size: square.size,
-              ),
-              if (highlight)
-                Container(
-                  color: Color.fromRGBO(128, 128, 128, .3),
-                  height: square.size,
-                  width: square.size,
+        return GestureDetector(
+          onTapUp: (TapUpDetails details) => onClick(HalfMove(square.name, square.piece)),
+          child: InkWell(
+            onTapDown: (TapDownDetails details) => onClick(HalfMove(square.name, square.piece)),
+            child: Stack(
+              children: [
+                UITile(
+                  color: square.color,
+                  size: square.size,
                 ),
-              board.buildCustomPiece
-                  .flatMap((t) => Option.fromNullable(t(square)))
-                  .alt(() => square.piece.map((t) => UIPiece(
-                        squareName: square.name,
-                        squareColor: square.color,
-                        piece: t,
-                        size: square.size,
-                      )))
-                  .getOrElse(() => SizedBox())
-            ],
+                if (highlight)
+                  Container(
+                    color: Color.fromRGBO(131, 175, 35, .3),
+                    height: square.size,
+                    width: square.size,
+                  ),
+                board.buildCustomPiece
+                    .flatMap((t) => Option.fromNullable(t(square)))
+                    .alt(() => square.piece.map((t) => UIPiece(
+                          squareName: square.name,
+                          squareColor: square.color,
+                          piece: t,
+                          size: square.size,
+                        )))
+                    .getOrElse(() => SizedBox())
+              ],
+            ),
           ),
         );
       },
