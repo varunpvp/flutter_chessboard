@@ -34,10 +34,11 @@ class UIPiece extends StatelessWidget {
       child: pieceWidget,
       feedback: FractionalTranslation(
           translation: const Offset(-0.5, -0.5), child: pieceWidget),
-      childWhenDragging: UITile(
-        color: squareColor,
-        size: size,
-      ),
+      childWhenDragging: Container(
+                  color: Color.fromRGBO(131, 175, 35, .3),
+                  height: size,
+                  width: size,
+                ),
     );
   }
 
