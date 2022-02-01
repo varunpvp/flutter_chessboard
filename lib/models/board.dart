@@ -25,6 +25,9 @@ class Board {
   final Option<BuildPiece> buildPiece;
   final Option<BuildSquare> buildSquare;
   final Option<BuildCustomPiece> buildCustomPiece;
+  final Color selectionHighlightColor;
+  final Color lastMoveHighlightColor;
+  final List<String> lastMove;
 
   Board({
     required this.fen,
@@ -37,6 +40,9 @@ class Board {
     BuildPiece? buildPiece,
     BuildSquare? buildSquare,
     BuildCustomPiece? buildCustomPiece,
+    required this.selectionHighlightColor,
+    required this.lastMoveHighlightColor,
+    required this.lastMove,
   })  : _onMove = onMove,
         _onPromote = onPromote,
         buildPiece = Option.fromNullable(buildPiece),

@@ -12,13 +12,13 @@ class UISquare extends StatelessWidget {
   final Square square;
   final void Function(ShortMove move) onDrop;
   final void Function(HalfMove move) onClick;
-  final bool highlight;
+  final Color? highlight;
 
   UISquare({
     required this.square,
     required this.onClick,
     required this.onDrop,
-    required this.highlight,
+    this.highlight,
   });
 
   @override
@@ -53,9 +53,9 @@ class UISquare extends StatelessWidget {
                 color: square.color,
                 size: square.size,
               ),
-              if (highlight)
+              if (highlight != null)
                 Container(
-                  color: Color.fromRGBO(128, 128, 128, .3),
+                  color: highlight,
                   height: square.size,
                   width: square.size,
                 ),
