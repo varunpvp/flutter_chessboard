@@ -6,6 +6,7 @@ import 'package:flutter_stateless_chessboard/models/board_color.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/models/short_move.dart';
+import 'package:flutter_stateless_chessboard/models/square.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_square.dart';
 import 'package:fpdart/fpdart.dart' show Option;
@@ -25,6 +26,9 @@ class Chessboard extends StatefulWidget {
     BuildPiece? buildPiece,
     BuildSquare? buildSquare,
     BuildCustomPiece? buildCustomPiece,
+    Color lastMoveHighlightColor = const Color.fromRGBO(128, 128, 128, .3),
+    Color selectionHighlightColor = const Color.fromRGBO(128, 128, 128, .3),
+    List<String> lastMove = const [],
   }) : board = Board(
           fen: fen,
           size: size,
@@ -36,6 +40,9 @@ class Chessboard extends StatefulWidget {
           buildPiece: buildPiece,
           buildSquare: buildSquare,
           buildCustomPiece: buildCustomPiece,
+          lastMove: lastMove,
+          lastMoveHighlightColor: lastMoveHighlightColor,
+          selectionHighlightColor: selectionHighlightColor,
         );
 
   @override
@@ -55,28 +62,37 @@ class _ChessboardState extends State<Chessboard> {
         child: Stack(
           alignment: AlignmentDirectional.topStart,
           textDirection: TextDirection.ltr,
-          children: widget.board.squares
-              .map((it) => UISquare(
-                    square: it,
-                    onClick: handleClick,
-                    onDrop: handleDrop,
-                    highlight: clickMove
-                        .map((t) => t.square == it.name)
-                        .getOrElse(() => false),
-                  ))
-              .toList(growable: false),
+          children: widget.board.squares.map((it) {
+            return UISquare(
+              square: it,
+              onClick: _handleClick,
+              onDrop: _handleDrop,
+              highlight: _getHighlight(it),
+            );
+          }).toList(growable: false),
         ),
       ),
     );
   }
 
-  void handleDrop(ShortMove move) {
+  Color? _getHighlight(Square square) {
+    return clickMove
+        .filter((t) => t.square == square.name)
+        .map((_) => widget.board.selectionHighlightColor)
+        .alt(() => Option.fromPredicate(
+              widget.board.lastMoveHighlightColor,
+              (_) => widget.board.lastMove.contains(square.name),
+            ))
+        .toNullable();
+  }
+
+  void _handleDrop(ShortMove move) {
     widget.board.makeMove(move).then((_) {
-      clearClickMove();
+      _clearClickMove();
     });
   }
 
-  void handleClick(HalfMove halfMove) {
+  void _handleClick(HalfMove halfMove) {
     clickMove.match(
       (t) {
         final sameSquare = t.square == halfMove.square;
@@ -85,28 +101,28 @@ class _ChessboardState extends State<Chessboard> {
             .getOrElse(() => false);
 
         if (sameSquare) {
-          clearClickMove();
+          _clearClickMove();
         } else if (sameColorPiece) {
-          setClickMove(halfMove);
+          _setClickMove(halfMove);
         } else {
           widget.board.makeMove(ShortMove(
             from: t.square,
             to: halfMove.square,
           ));
-          clearClickMove();
+          _clearClickMove();
         }
       },
-      () => setClickMove(halfMove),
+      () => _setClickMove(halfMove),
     );
   }
 
-  void setClickMove(HalfMove halfMove) {
+  void _setClickMove(HalfMove halfMove) {
     setState(() {
       clickMove = Option.of(halfMove).flatMap((t) => t.piece.map((_) => t));
     });
   }
 
-  void clearClickMove() {
+  void _clearClickMove() {
     setState(() {
       clickMove = Option.none();
     });
