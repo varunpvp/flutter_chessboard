@@ -1,6 +1,6 @@
 name: flutter_stateless_chessboard
 description: A Chessboard Widget for Flutter. This package provides just the chessboard. The game logic can be implemented using chess library.
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/varunpvp/flutter_chessboard
 
 environment:

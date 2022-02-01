@@ -42,3 +42,7 @@
 ## [1.1.1] - Nov 29, 2021.
 
 * buildCustomPiece
+
+## [1.1.2] - Feb 1, 2022.
+
+* add lastMove, lastMoveHighlightColor and selectionHighlightColor
