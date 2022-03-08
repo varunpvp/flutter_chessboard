@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stateless_chessboard/models/board_arrow.dart';
 import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/utils.dart' as utils;
 import 'package:fpdart/fpdart.dart';
@@ -28,6 +29,7 @@ class Board {
   final Color selectionHighlightColor;
   final Color lastMoveHighlightColor;
   final List<String> lastMove;
+  final List<BoardArrow> arrows;
 
   Board({
     required this.fen,
@@ -43,6 +45,7 @@ class Board {
     required this.selectionHighlightColor,
     required this.lastMoveHighlightColor,
     required this.lastMove,
+    required this.arrows,
   })  : _onMove = onMove,
         _onPromote = onPromote,
         buildPiece = Option.fromNullable(buildPiece),
