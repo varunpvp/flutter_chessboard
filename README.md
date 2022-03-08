@@ -27,6 +27,9 @@ void main() {
             orientation: BoardColor.BLACK, // optional
             lightSquareColor: Color.fromRGBO(240, 217, 181, 1), // optional
             darkSquareColor: Color.fromRGBO(181, 136, 99, 1), // optional
+            arrows: <BoardArrow>[
+              BoardArrow(from: 'g1', to: 'f3', color: Colors.greenAccent,),
+            ], // optional
           ),
         ),
       ),
@@ -144,3 +147,7 @@ handle piece promotion
 ### buildPiece (optional):
 
 handle building of custom piece
+
+### arrows (optional):
+
+Specify the arrows to draw, as well as their colors. Passing a List of `BoardArrow`. Where `BoardArrow` accepts `from` square as `String`, `to` square as `String` and `color` as `Color` from flutter material package.
