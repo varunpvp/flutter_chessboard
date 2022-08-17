@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 class Chessboard extends StatefulWidget {
   final Board board;
+  final String? hintSquare;
 
   Chessboard({
     required String fen,
@@ -26,10 +27,11 @@ class Chessboard extends StatefulWidget {
     BuildPiece? buildPiece,
     BuildSquare? buildSquare,
     BuildCustomPiece? buildCustomPiece,
+    String? hintSquare,
     Color lastMoveHighlightColor = const Color.fromRGBO(128, 128, 128, .3),
     Color selectionHighlightColor = const Color.fromRGBO(128, 128, 128, .3),
     List<String> lastMove = const [],
-  }) : board = Board(
+  })  : board = Board(
           fen: fen,
           size: size,
           orientation: orientation,
@@ -43,7 +45,8 @@ class Chessboard extends StatefulWidget {
           lastMove: lastMove,
           lastMoveHighlightColor: lastMoveHighlightColor,
           selectionHighlightColor: selectionHighlightColor,
-        );
+        ),
+        hintSquare = hintSquare;
 
   @override
   State<StatefulWidget> createState() => _ChessboardState();
@@ -76,6 +79,9 @@ class _ChessboardState extends State<Chessboard> {
   }
 
   Color? _getHighlight(Square square) {
+    if (square.name == widget.hintSquare) {
+      return const Color.fromARGB(100, 80, 124, 101);
+    }
     return clickMove
         .filter((t) => t.square == square.name)
         .map((_) => widget.board.selectionHighlightColor)
