@@ -57,6 +57,7 @@ class Board {
     if (utils.isPromoting(fen, move)) {
       final pieceType = await promotion;
       return pieceType.match(
+        () => Future.error("Move cancelled"),
         (t) {
           _onMove(ShortMove(
             from: move.from,
@@ -64,7 +65,6 @@ class Board {
             promotion: Option.of(t),
           ));
         },
-        () => Future.error("Move cancelled"),
       );
     } else {
       _onMove(move);

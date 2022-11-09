@@ -94,6 +94,7 @@ class _ChessboardState extends State<Chessboard> {
 
   void _handleClick(HalfMove halfMove) {
     clickMove.match(
+      () => _setClickMove(halfMove),
       (t) {
         final sameSquare = t.square == halfMove.square;
         final sameColorPiece = t.piece
@@ -112,7 +113,6 @@ class _ChessboardState extends State<Chessboard> {
           _clearClickMove();
         }
       },
-      () => _setClickMove(halfMove),
     );
   }
 
