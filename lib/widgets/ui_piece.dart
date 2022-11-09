@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
 import 'package:flutter_stateless_chessboard/models/board.dart';
 import 'package:flutter_stateless_chessboard/models/half_move.dart';
-import 'package:flutter_stateless_chessboard/models/piece.dart';
 import 'package:flutter_stateless_chessboard/widgets/ui_tile.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:provider/provider.dart';
