@@ -1,5 +1,3 @@
-import 'dart:ui' show hashValues;
-
 import 'board_color.dart';
 import 'piece_type.dart';
 
@@ -38,5 +36,5 @@ class Piece {
   }
 
   @override
-  int get hashCode => hashValues(color, type);
+  int get hashCode => Object.hash(color, type);
 }

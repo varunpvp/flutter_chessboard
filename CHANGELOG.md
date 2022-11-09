@@ -46,3 +46,8 @@
 ## [1.1.2] - Feb 1, 2022.
 
 * add lastMove, lastMoveHighlightColor and selectionHighlightColor
+
+## [1.1.3] - Nov 2, 2022.
+
+* updated dependencies
+* migrated code to fpdart 0.3.0
